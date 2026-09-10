@@ -2,8 +2,6 @@
 
 This module contains independent, reusable embedded systems knowledge organized by subject.
 
-![Embedded Systems Engineering Roadmap](https://github.com/m3y54m/Embedded-Engineering-Roadmap/releases/latest/download/Embedded-Engineering-Roadmap.png)
-
 ## Principles
 
 1. Organize knowledge by subject.
