@@ -16,4 +16,4 @@ Embedded_System_Note/
 - `knowledge/` — Reusable technical knowledge.
 - `skills/` — Rules for AI working with this repository.
 
-Each module has one responsibility. Cross-module reuse should use references instead of duplicated content.
+Top-level modules are independent. When working in one module, do not modify another module unless explicitly requested.
