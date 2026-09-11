@@ -93,10 +93,10 @@ Do not create separate example-oriented files such as `examples.c` or `exercises
 
 ## 7. Default Layout
 
-Use numbered headings for major sections.
+Use numbered headings for major sections and hierarchical numbering for subsections when needed.
 
-Use hierarchical numbering for subsections when needed.
+For major sections, place `---` immediately before and after the `##` heading.
 
-Use `---` between major sections when it improves scanability.
+Between `###` subsections, use one `---`.
 
-Do not add decorative separators inside ordinary paragraphs or small subsections.
+Do not add separators inside ordinary paragraph groups.
