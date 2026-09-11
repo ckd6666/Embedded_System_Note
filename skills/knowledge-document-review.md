@@ -30,9 +30,8 @@ Content should normally remain only when it does at least one of the following:
 1. Defines a core concept.
 2. Explains a core mechanism or relationship.
 3. Prevents a likely or dangerous misunderstanding.
-4. Provides the minimum example necessary to understand the concept.
-5. States an engineering constraint that materially affects correct usage.
-6. Establishes prerequisite knowledge required by a later chapter.
+4. States an engineering constraint that materially affects correct usage.
+5. Establishes prerequisite knowledge required by a later chapter.
 
 If it serves none of these purposes, remove it.
 
@@ -48,7 +47,9 @@ Ask:
 
 Requirements:
 
-- Prefer the language standard or another authoritative specification as the semantic baseline.
+- Prefer the language standard, official specification, official documentation, recognized engineering standards, institutional guidance, or highly recognized technical references as the semantic baseline.
+- Keep terminology and necessary symbols aligned with authoritative sources.
+- Verbatim wording may be retained only when the source license, public-domain status, or other applicable permission allows it; otherwise use concise quotation or accurate paraphrase with a reference.
 - Distinguish language rules from engineering conventions.
 - Do not simplify a rule in a way that creates a false mental model.
 - If an important rule depends on scope, storage duration, linkage, implementation, standard version, or other context, state that context.
@@ -64,7 +65,8 @@ Remove:
 - repeated conclusions,
 - motivational filler,
 - statements that merely say a concept is "important",
-- multiple examples that demonstrate exactly the same thing,
+- AI-generated examples, sample code, or hypothetical cases,
+- AI-generated flowcharts or teaching diagrams,
 - background knowledge not required by the chapter.
 
 Keep only the smallest amount needed for correct understanding.
@@ -92,36 +94,21 @@ Ask:
 Prefer:
 
 - one precise sentence over three similar sentences,
-- one decisive example over several redundant examples,
-- a small table when it replaces repetitive prose,
-- a simple diagram when relationships are otherwise difficult to express.
+- compact established terminology,
+- necessary symbols or notation when they are more precise than repeated prose,
+- a small table only when it reduces repeated prose without introducing examples.
+
+Do not add examples, sample code, flowcharts, process diagrams, or teaching diagrams during review.
 
 Compression must never sacrifice correctness.
 
-## 4. Example Selection Rule
+## 4. Text and Necessary Symbols Only
 
-Examples exist to reduce cognitive load, not to make the document look complete.
+During review, do not create or add examples, sample code, worked examples, hypothetical cases, flowcharts, process diagrams, or teaching diagrams.
 
-Before adding an example, ask:
+AI-authored additions must use only concise factual prose, established terminology, necessary symbols or notation, and references.
 
-> What misunderstanding does this example eliminate?
-
-If there is no clear answer, do not add it.
-
-When several examples teach the same idea, keep the smallest or clearest one.
-
-Add another example only when it introduces a genuinely different case.
-
-For example:
-
-```c
-int value;
-int *p;
-```
-
-may both be necessary when explaining declarators because they demonstrate two different declaration shapes.
-
-Three additional pointer examples that demonstrate the same relationship probably are not necessary.
+If an existing document already contains user-authored examples or diagrams, do not expand them unless explicitly requested.
 
 ## 5. Distinguish Core Knowledge from Detail
 
@@ -151,17 +138,7 @@ Do not keep detail merely because it is technically interesting.
 
 Do not introduce advanced concepts merely because they are related.
 
-A brief preview is acceptable only when required to prevent an incorrect model.
-
-For example, an introductory declaration chapter may show:
-
-```c
-int *p;
-```
-
-to demonstrate that a declarator can contain `*`.
-
-It should not teach pointer arithmetic, pointer lifetime, or complex function-pointer syntax there.
+A brief preview is acceptable only when required to prevent an incorrect model. Keep that preview textual and minimal, and link to the chapter that owns the full concept.
 
 ## 7. Engineering Rules Must Stay Near the Concept They Constrain
 
@@ -198,21 +175,13 @@ Do not maintain multiple full explanations of the same concept.
 
 Before completing or committing a `knowledge/` document, review it in this order:
 
-```text
-1. Correctness
-   ↓
-2. Deletion test, sentence by sentence
-   ↓
-3. Chapter-boundary check
-   ↓
-4. Remove duplicate explanations
-   ↓
-5. Remove redundant examples
-   ↓
-6. Compress remaining wording
-   ↓
-7. Verify links and references
-```
+1. Correctness.
+2. Deletion test, sentence by sentence.
+3. Chapter-boundary check.
+4. Remove duplicate explanations.
+5. Remove AI-generated examples, sample code, and diagrams.
+6. Compress remaining wording.
+7. Verify links and references.
 
 Then perform one final question:
 
