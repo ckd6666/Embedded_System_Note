@@ -57,12 +57,14 @@ unsigned long long
 
 `signed` 类型能够表示负值、零和正值；对应的 `unsigned` 类型只表示非负值。
 
-例如：
+例如，温度偏差可能需要负值，而重试次数通常只需要非负值：
 
 ```c
-int temperature = -20;
+int temperature_delta = -20;
 unsigned int retry_count = 3;
 ```
+
+选择 signed 或 unsigned，首先取决于这个值在语义上是否允许为负。
 
 `short` 是 `short int` 的简写，`long` 是 `long int` 的简写，`unsigned` 是 `unsigned int` 的简写。
 
@@ -97,6 +99,19 @@ C 只规定这些标准整数类型至少具有下面的宽度：
 
 在实际工程中，应通过目标编译器和 ABI 文档、`sizeof`、`<limits.h>` 等确认平台上的实际范围和宽度。
 
+例如：
+
+```c
+#include <limits.h>
+
+sizeof(int) * CHAR_BIT   /* int 的实际 bit 数 */
+INT_MIN                  /* int 的最小值 */
+INT_MAX                  /* int 的最大值 */
+UINT_MAX                 /* unsigned int 的最大值 */
+```
+
+这比假设“`int` 就是 32 bits”可靠得多。
+
 需要明确宽度的整数时，相关类型和规则见 [04-integers-and-bits](../../04-integers-and-bits/)。
 
 ---
@@ -115,6 +130,18 @@ unsigned char
 
 Plain `char` 最终表现为 signed 还是 unsigned 由 implementation 决定。因此，当代码的正确性依赖负值范围或完整的非负字节范围时，不应仅依赖 plain `char` 的 signedness。
 
+可以通过 `<limits.h>` 查看当前实现：
+
+```c
+#include <limits.h>
+
+#if CHAR_MIN < 0
+/* plain char is signed on this implementation */
+#else
+/* plain char is unsigned on this implementation */
+#endif
+```
+
 另一个重要规则是：
 
 `sizeof(char) == 1`
@@ -127,7 +154,13 @@ Plain `char` 最终表现为 signed 还是 unsigned 由 implementation 决定。
 1 byte in C != necessarily 8 bits
 ```
 
-`unsigned char` 还可以用于访问 object 的原始 byte representation。完整规则见 [07-objects-and-data-layout](../../07-objects-and-data-layout/)。
+`unsigned char` 还经常用于表示原始 byte 数据：
+
+```c
+unsigned char packet[4] = { 0x12, 0x34, 0xAB, 0xCD };
+```
+
+它也可以用于访问 object 的原始 byte representation。完整规则见 [07-objects-and-data-layout](../../07-objects-and-data-layout/)。
 
 ---
 
@@ -143,6 +176,20 @@ bool error = false;
 ```
 
 `bool`、`true` 和 `false` 可以直接作为语言提供的名称使用。
+
+Boolean type 也常用于保存条件结果：
+
+```c
+int temperature = 85;
+bool over_limit = temperature > 80;
+```
+
+当整数值转换为 Boolean type 时，`0` 转换为 `false`，非 `0` 值转换为 `true`：
+
+```c
+bool a = 0;    /* false */
+bool b = 42;   /* true  */
+```
 
 在大量仍使用 C99、C11 或 C17 的嵌入式代码中，常见写法是：
 
@@ -179,8 +226,12 @@ long double
 
 ```c
 float voltage = 3.3f;
-double result = 0.0;
+double result = 3.3;
 ```
+
+这里 `3.3f` 是 `float` 常量，而没有后缀的 `3.3` 是 `double` 常量。
+
+这在嵌入式代码中很实际：如果某个平台对 `double` 运算支持较弱，无意中使用 `double` 常量可能带来额外的转换或执行成本。具体成本仍取决于目标平台和编译器。
 
 ---
 
@@ -200,7 +251,13 @@ void reset_device(void);
 void value;   // invalid
 ```
 
-`void` 还用于构成 `void *`。Pointer 和 function 的完整规则分别见 [06-pointers-and-memory](../../06-pointers-and-memory/) 和 [08-functions-and-api](../../08-functions-and-api/)。
+`void` 还用于构成 `void *`：
+
+```c
+void *buffer;
+```
+
+`void *` 表示一种通用 object pointer，但如何转换、解引用和使用属于 pointer 语义。完整规则见 [06-pointers-and-memory](../../06-pointers-and-memory/) 和 [08-functions-and-api](../../08-functions-and-api/)。
 
 ---
 
@@ -213,6 +270,15 @@ void value;   // invalid
 `int` 并不等于“32-bit integer”，`long` 也不等于“32-bit integer”。
 
 类型的实际宽度属于 implementation 的选择。
+
+例如，下面两种实现都可能符合 C 标准：
+
+| Type | Implementation A | Implementation B |
+| --- | ---: | ---: |
+| `int` | 16 bits | 32 bits |
+| `long` | 32 bits | 64 bits |
+
+因此移植代码时，不能把某个平台上的实际宽度当作语言本身的保证。
 
 ---
 
