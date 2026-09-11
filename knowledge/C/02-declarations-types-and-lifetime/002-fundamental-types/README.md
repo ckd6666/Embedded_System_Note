@@ -95,9 +95,7 @@ Plain `char` 的表示和行为与 `signed char` 或 `unsigned char` 中的一�
 
 Signed 和对应 unsigned integer type 是不同类型，但具有相同的 storage requirement。
 
-Unsigned integer type 的值域从 `0` 开始，并按模 `2^N` 的规则表示，其中 `N` 是 value bits 的数量。
-
-Signed integer 的表示、integer promotions、usual arithmetic conversions、overflow 和 mixed signed/unsigned arithmetic 属于 [04-integers-and-bits](../../04-integers-and-bits/)，本条目只保留类型分类。
+Unsigned integer type 的值域从 `0` 开始。其算术、integer promotions、usual arithmetic conversions、overflow 和 mixed signed/unsigned arithmetic 属于 [04-integers-and-bits](../../04-integers-and-bits/)，本条目只保留类型分类。
 
 ---
 
@@ -153,14 +151,14 @@ double calculation;
 2. **ISO/IEC 9899:2024 (C23), 6.2.6 Representations of types** — integer and object representations.
 3. **ISO/IEC 9899:2024 (C23), 6.7.2 Type specifiers** — type specifier rules.
 4. **cppreference — Type**  
-   https://en.cppreference.com/w/c/language/type
+   https://en.cppreference.com/c/language/type
 5. **cppreference — Arithmetic types**  
-   https://en.cppreference.com/w/c/language/arithmetic_types
+   https://en.cppreference.com/c/language/arithmetic_types
 6. **cppreference — `bool` keyword**  
-   https://en.cppreference.com/w/c/keyword/bool
+   https://en.cppreference.com/c/keyword/bool
 7. **cppreference — `_Bool` keyword**  
-   https://en.cppreference.com/w/c/keyword/_Bool
+   https://en.cppreference.com/c/keyword/_Bool
 8. **cppreference — `<limits.h>`**  
-   https://en.cppreference.com/w/c/types/limits
+   https://en.cppreference.com/c/header/limits
 9. **cppreference — `<float.h>`**  
-   https://en.cppreference.com/w/c/types/limits
+   https://en.cppreference.com/c/header/float
