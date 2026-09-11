@@ -2,78 +2,81 @@
 
 ---
 
-## 1. Definition
+## 1. Overview
 
 ---
 
-本仓库使用 **fundamental types** 作为章节名称；ISO C 的正式分类中，`void` 单独列出，其余内建基础类型主要归入 **basic types**。
+C 的 type 决定一个值应当如何被解释，以及这个值可以参与哪些操作。
 
-本条目聚焦嵌入式 C 中最常用的基础类型：
+日常嵌入式 C 中，最常见的基础类型可以先分成下面几组：
 
-| Category | Types |
+| 用途 | 常用类型 |
 | --- | --- |
-| Boolean | `bool`；`_Bool` 是 C23 中保留但已弃用的兼容拼写 |
-| Character | `char`, `signed char`, `unsigned char` |
-| Standard signed integer | `signed char`, `short int`, `int`, `long int`, `long long int` |
-| Standard unsigned integer | `unsigned char`, `unsigned short int`, `unsigned int`, `unsigned long int`, `unsigned long long int` |
-| Real floating | `float`, `double`, `long double` |
-| No-value type | `void` |
+| 整数 | `short`, `int`, `long`, `long long` 及其 `unsigned` 版本 |
+| 字符与字节数据 | `char`, `signed char`, `unsigned char` |
+| 真 / 假 | `bool` |
+| 浮点数 | `float`, `double`, `long double` |
+| 表示“没有值” | `void` |
 
-C23 还定义了 bit-precise integer types（`_BitInt`）以及其他浮点类型类别；本条目不展开这些类型的专门规则。
+学习这些类型时，最重要的不是记住一张类型名称表，而是理解：
 
----
-
-## 2. Core Rules
-
----
-
-### 2.1 Type
-
-Type 决定 object 中二进制表示的解释方式，并约束 expression 可以表示的值及可进行的操作。
-
-不同 type names 不应仅按“占多少字节”理解。类型还决定值域、表示、转换和运算语义。
+- signed 与 unsigned 表示的值域不同；
+- `char`、`signed char`、`unsigned char` 是三个不同类型；
+- `int`、`long` 等类型的实际宽度由 implementation 决定；
+- `sizeof(char)` 永远是 `1`，但一个 C byte 不一定等于 8 bits；
+- 浮点类型的实际精度、表示和执行成本依赖实现和目标平台；
+- `void` 表示没有可用的值，不能用来定义普通 object。
 
 ---
 
-### 2.2 Boolean Type
+## 2. Core Concepts
 
-C23 的 Boolean type 使用关键字 `bool`，其值为 `true` 或 `false`。
+---
 
-`_Bool` 自 C99 起存在，并在 C23 中成为 `bool` 的 deprecated alternative spelling。C23 中 `bool`、`true` 和 `false` 已是语言关键字，不再依赖 `<stdbool.h>` 提供宏定义。
+### 2.1 Integer Types
+
+C 提供以下常用 signed integer types：
 
 ```c
-bool ready = true;
+signed char
+short
+int
+long
+long long
 ```
 
-Boolean conversion 的完整规则属于 expression/conversion 语义，本条目不展开。
+除 `bool` 外，每个标准 signed integer type 都有对应的 unsigned type：
+
+```c
+unsigned char
+unsigned short
+unsigned int
+unsigned long
+unsigned long long
+```
+
+`signed` 类型能够表示负值、零和正值；对应的 `unsigned` 类型只表示非负值。
+
+例如：
+
+```c
+int temperature = -20;
+unsigned int retry_count = 3;
+```
+
+`short` 是 `short int` 的简写，`long` 是 `long int` 的简写，`unsigned` 是 `unsigned int` 的简写。
+
+整数运算中的 promotion、conversion、overflow 和 signed/unsigned 混合运算属于 [04-integers-and-bits](../../04-integers-and-bits/)，本章先建立类型本身的基本认识。
 
 ---
 
-### 2.3 Character Types
+### 2.2 Integer Width Is Implementation-Defined
 
-`char`、`signed char` 和 `unsigned char` 是三个不同的类型。
+不能从 `short`、`int`、`long` 这些名称直接推出固定 bit width。
 
-Plain `char` 的表示和行为与 `signed char` 或 `unsigned char` 中的一种对应，具体选择由 implementation 决定；因此不能假定 `char` 一定有符号或一定无符号。
+C 只规定这些标准整数类型至少具有下面的宽度：
 
-`sizeof(char) == 1`。C 中一个 byte 由 `CHAR_BIT` 个 bits 组成，标准保证 `CHAR_BIT >= 8`，因此不能把 C 的一个 byte 无条件等同于 8 bits。
-
-`unsigned char` 还具有访问 object representation 的特殊语言地位；完整 object representation 规则属于 [07-objects-and-data-layout](../../07-objects-and-data-layout/)。
-
----
-
-### 2.4 Standard Integer Types
-
-标准 signed integer types 按 rank 递增为：
-
-`signed char`, `short int`, `int`, `long int`, `long long int`。
-
-每个标准 signed integer type 都有对应的 unsigned type。
-
-常用简写是同一类型的不同 type-specifier 写法，例如 `short` 等价于 `short int`，`unsigned` 等价于 `unsigned int`。
-
-标准只保证最低宽度：
-
-| Type family | Minimum width |
+| Type | Minimum width |
 | --- | ---: |
 | `char`, `signed char`, `unsigned char` | 8 bits |
 | `short`, `unsigned short` | 16 bits |
@@ -81,84 +84,182 @@ Plain `char` 的表示和行为与 `signed char` 或 `unsigned char` 中的一�
 | `long`, `unsigned long` | 32 bits |
 | `long long`, `unsigned long long` | 64 bits |
 
-同时保证：
+并保证：
 
-`1 == sizeof(char) <= sizeof(short) <= sizeof(int) <= sizeof(long) <= sizeof(long long)`
+`sizeof(char) <= sizeof(short) <= sizeof(int) <= sizeof(long) <= sizeof(long long)`
 
-因此，`int`、`long` 等名称不能直接推出固定 bit width。
-
-当 bit width、signedness、integer conversions 或 overflow 影响程序正确性时，见 [04-integers-and-bits](../../04-integers-and-bits/)。
-
----
-
-### 2.5 Signed and Unsigned Integer Types
-
-Signed 和对应 unsigned integer type 是不同类型，但具有相同的 storage requirement。
-
-Unsigned integer type 的值域从 `0` 开始。其算术、integer promotions、usual arithmetic conversions、overflow 和 mixed signed/unsigned arithmetic 属于 [04-integers-and-bits](../../04-integers-and-bits/)，本条目只保留类型分类。
-
----
-
-### 2.6 Real Floating Types
-
-标准 real floating types 是：
-
-- `float`
-- `double`
-- `long double`
-
-它们按 floating-point conversion rank 递增，但 implementation 可以让相邻类型具有相同的表示。
-
-不能仅凭类型名称假定具体 IEEE 754 format、bit width 或硬件执行成本。实际范围和精度应以 implementation 及 `<float.h>` 提供的信息为准。
+因此下面这种假设并不由 C 标准保证：
 
 ```c
-float temperature;
-double calculation;
+// 不能仅根据名字假设：
+int  -> 32 bits
+long -> 32 bits
+```
+
+在实际工程中，应通过目标编译器和 ABI 文档、`sizeof`、`<limits.h>` 等确认平台上的实际范围和宽度。
+
+需要明确宽度的整数时，相关类型和规则见 [04-integers-and-bits](../../04-integers-and-bits/)。
+
+---
+
+### 2.3 Character Types
+
+C 中存在三个不同的 character types：
+
+```c
+char
+signed char
+unsigned char
+```
+
+`char` 与另外两个类型都不相同。
+
+Plain `char` 最终表现为 signed 还是 unsigned 由 implementation 决定。因此，当代码的正确性依赖负值范围或完整的非负字节范围时，不应仅依赖 plain `char` 的 signedness。
+
+另一个重要规则是：
+
+`sizeof(char) == 1`
+
+这里的 `1` 表示 **一个 C byte**。一个 byte 包含多少 bits 由 `CHAR_BIT` 决定，标准保证 `CHAR_BIT >= 8`。
+
+因此：
+
+```text
+1 byte in C != necessarily 8 bits
+```
+
+`unsigned char` 还可以用于访问 object 的原始 byte representation。完整规则见 [07-objects-and-data-layout](../../07-objects-and-data-layout/)。
+
+---
+
+### 2.4 Boolean Type
+
+Boolean type 用于表示逻辑上的真和假。
+
+在 C23 中：
+
+```c
+bool ready = true;
+bool error = false;
+```
+
+`bool`、`true` 和 `false` 可以直接作为语言提供的名称使用。
+
+在大量仍使用 C99、C11 或 C17 的嵌入式代码中，常见写法是：
+
+```c
+#include <stdbool.h>
+
+bool ready = true;
+```
+
+这些版本的核心 Boolean type 名称是 `_Bool`，而 `<stdbool.h>` 提供常用的 `bool`、`true` 和 `false`。
+
+---
+
+### 2.5 Floating Types
+
+常用的 floating types 是：
+
+```c
+float
+double
+long double
+```
+
+它们用于表示具有小数部分或较大动态范围的数值。
+
+通常可以把它们理解为不同精度级别的浮点类型，但不能仅凭类型名称假定：
+
+- 固定 bit width；
+- 一定使用某个 IEEE 754 format；
+- 某种类型一定由硬件直接支持；
+- `double` 在所有 MCU 上都具有相同的执行成本。
+
+实际范围和精度可以通过 `<float.h>` 以及目标编译器、ABI 和处理器文档确认。
+
+```c
+float voltage = 3.3f;
+double result = 0.0;
 ```
 
 ---
 
-### 2.7 `void`
+### 2.6 `void`
 
-`void` 是 incomplete type，并且不能被 completed。
+`void` 表示没有可用的值。
 
-它表示没有可用的 value，因此不能定义 type 为 `void` 的 object。
+最常见的用途之一是表示函数不返回值：
 
-`void` 可用于 function return type、无参数 function prototype，以及构成 pointer-to-`void` 类型。Function 和 pointer 的完整语义分别见 [08-functions-and-api](../../08-functions-and-api/) 与 [06-pointers-and-memory](../../06-pointers-and-memory/)。
+```c
+void reset_device(void);
+```
+
+不能定义 `void` 类型的普通 object：
+
+```c
+void value;   // invalid
+```
+
+`void` 还用于构成 `void *`。Pointer 和 function 的完整规则分别见 [06-pointers-and-memory](../../06-pointers-and-memory/) 和 [08-functions-and-api](../../08-functions-and-api/)。
 
 ---
 
-## 3. Related Knowledge
+## 3. Important Distinctions
+
+---
+
+### 3.1 Type Name Does Not Mean Fixed Width
+
+`int` 并不等于“32-bit integer”，`long` 也不等于“32-bit integer”。
+
+类型的实际宽度属于 implementation 的选择。
+
+---
+
+### 3.2 `char` Is Not the Same as `signed char`
+
+即使某个平台上的 plain `char` 表现为 signed，`char` 和 `signed char` 仍然是不同类型。
+
+同理，plain `char` 也不等同于 `unsigned char`。
+
+---
+
+### 3.3 Signedness Is Part of the Type
+
+`int` 和 `unsigned int` 是不同类型。
+
+它们不仅值域不同，参与表达式运算时的转换和算术规则也不同。完整规则见 [04-integers-and-bits](../../04-integers-and-bits/)。
+
+---
+
+## 4. Related Knowledge
 
 ---
 
 - [001-variables-declarations-and-definitions](../001-variables-declarations-and-definitions/) — type 在 declaration 中的作用
-- [003-initialization](../003-initialization/) — 不同类型 object 的 initialization
+- [003-initialization](../003-initialization/) — object 的 initialization
 - [004-typedef-and-enum](../004-typedef-and-enum/) — type aliases 与 enumerated types
 - [005-const-and-type-qualifiers](../005-const-and-type-qualifiers/) — qualified types
-- [04-integers-and-bits](../../04-integers-and-bits/) — integer widths, conversions, overflow, and bit operations
+- [04-integers-and-bits](../../04-integers-and-bits/) — integer widths, conversions, overflow, and fixed-width integer types
 - [06-pointers-and-memory](../../06-pointers-and-memory/) — pointer types and `void *`
-- [07-objects-and-data-layout](../../07-objects-and-data-layout/) — object representation and byte-level access
+- [07-objects-and-data-layout](../../07-objects-and-data-layout/) — object representation
 - [08-functions-and-api](../../08-functions-and-api/) — function types and `void` return type
 
 ---
 
-## 4. References
+## 5. References
 
 ---
 
-1. **ISO/IEC 9899:2024 (C23), 6.2.5 Types** — C type classification and properties.
-2. **ISO/IEC 9899:2024 (C23), 6.2.6 Representations of types** — integer and object representations.
+1. **ISO/IEC 9899:2024 (C23), 6.2.5 Types** — type categories and fundamental type properties.
+2. **ISO/IEC 9899:2024 (C23), 5.2.4.2 Numerical limits** — minimum ranges and implementation limits.
 3. **ISO/IEC 9899:2024 (C23), 6.7.2 Type specifiers** — type specifier rules.
-4. **cppreference — Type**  
-   https://en.cppreference.com/c/language/type
-5. **cppreference — Arithmetic types**  
+4. **cppreference — Arithmetic types**  
    https://en.cppreference.com/c/language/arithmetic_types
-6. **cppreference — `bool` keyword**  
-   https://en.cppreference.com/c/keyword/bool
-7. **cppreference — `_Bool` keyword**  
-   https://en.cppreference.com/c/keyword/_Bool
-8. **cppreference — `<limits.h>`**  
+5. **cppreference — Numeric limits**  
+   https://en.cppreference.com/c/types/limits
+6. **cppreference — `<limits.h>`**  
    https://en.cppreference.com/c/header/limits
-9. **cppreference — `<float.h>`**  
+7. **cppreference — `<float.h>`**  
    https://en.cppreference.com/c/header/float
