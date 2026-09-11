@@ -1,6 +1,6 @@
 # Variables, Declarations, and Definitions
 
-## Definition
+## 1. Definition
 
 | Concept | Definition |
 | --- | --- |
@@ -18,9 +18,11 @@
 - 每个 definition 都是 declaration，但 declaration 不一定是 definition。
 - Definition 与 initialization 是不同概念。
 
-## Core Rules
+---
 
-### Identifier and Object
+## 2. Core Rules
+
+### 2.1 Identifier and Object
 
 Identifier 用于指示实体；object 是执行环境中的数据存储实体，因此二者不是同一概念。
 
@@ -32,7 +34,7 @@ int count = 10;
 
 Object 的类型、storage duration 和 lifetime 分别由其他语言规则规定。
 
-### Declaration and Declarator
+### 2.2 Declaration and Declarator
 
 C23 中，declaration 用于指定一组 identifiers 的解释和属性。
 
@@ -50,7 +52,7 @@ Declarator 不等同于 identifier。完整的 pointer、array 和 function decl
 
 Identifier 在使用前必须具有适用的 declaration；见 SEI CERT C DCL31-C。
 
-### Definition
+### 2.3 Definition
 
 Definition 是 declaration 的一种。
 
@@ -67,7 +69,7 @@ File scope 下某些 object declarations 属于 tentative definitions。Tentativ
 
 Object 被定义不等于已经显式初始化。Initialization 的完整规则见 [003-initialization](../003-initialization/)。
 
-### Initializer
+### 2.4 Initializer
 
 Object declaration 可以通过 initialization 提供初始值。Initializer 是 initialization 语法的一部分。
 
@@ -80,13 +82,15 @@ count = 20;
 
 完整初始化规则见 [003-initialization](../003-initialization/)。
 
-### Compatible Declarations
+### 2.5 Compatible Declarations
 
 同一 scope 中引用同一 object 或 function 的 declarations 必须指定 compatible types。
 
 SEI CERT C DCL40-C 同样要求不得为同一 function 或 object 创建 incompatible declarations。
 
-## Related Knowledge
+---
+
+## 3. Related Knowledge
 
 - [002-fundamental-types](../002-fundamental-types/) — fundamental types
 - [003-initialization](../003-initialization/) — initialization
@@ -97,7 +101,9 @@ SEI CERT C DCL40-C 同样要求不得为同一 function 或 object 创建 incomp
 - [06-pointers-and-memory](../../06-pointers-and-memory/) — pointer declarators and pointer semantics
 - [08-functions-and-api](../../08-functions-and-api/) — function declarations and definitions
 
-## References
+---
+
+## 4. References
 
 1. **ISO/IEC 9899:2024 (C23), 6.7 Declarations** — declaration, definition, declaration specifiers, declarators.
 2. **WG14 N3220 — ISO/IEC 9899:2024 working draft**  
