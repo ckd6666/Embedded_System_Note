@@ -24,9 +24,15 @@
 
 Identifier 用于指示实体；object 是执行环境中的数据存储实体，因此二者不是同一概念。
 
+```c
+int count = 10;
+```
+
+其中 `count` 是 identifier；它指示一个类型为 `int` 的 object。
+
 Object 的类型、storage duration 和 lifetime 分别由其他语言规则规定。
 
-### Declaration
+### Declaration and Declarator
 
 C23 中，declaration 用于指定一组 identifiers 的解释和属性。
 
@@ -34,19 +40,28 @@ Declaration specifiers 指示 declarator 所表示实体的 linkage、storage du
 
 一个 declaration 可以包含多个 declarators。每个 declarator 分别与公共 declaration specifiers 组合后确定相应 identifier 的完整声明类型。
 
-Identifier 在使用前必须具有适用的 declaration；SEI CERT C DCL31-C 对此作出明确要求。
+```c
+int *p, value;
+```
 
-### Declarator
+这里 `int` 是公共 type specifier；`*p` 和 `value` 是两个不同的 declarators。因此 `p` 的类型是 pointer to `int`，而 `value` 的类型是 `int`。
 
-Declarator 是 declaration 的组成部分，不等同于 identifier。
+Declarator 不等同于 identifier。完整的 pointer、array 和 function declarator 规则分别属于对应主题，本条目不展开。
 
-Declarator 可以只包含 identifier，也可以包含改变或补充完整类型的声明语法。完整的 pointer、array 和 function declarator 规则分别属于对应主题，本条目不展开。
+Identifier 在使用前必须具有适用的 declaration；见 SEI CERT C DCL31-C。
 
 ### Definition
 
 Definition 是 declaration 的一种。
 
 对于 object，definition 使存储被保留；对于 function，definition 包含 function body。Enumeration constant 和 typedef name 也具有标准规定的 definition 条件。
+
+```c
+extern int system_tick;
+int system_tick = 0;
+```
+
+在 file scope 下，第一条是 declaration 而不是 object definition；第二条是 object definition。
 
 File scope 下某些 object declarations 属于 tentative definitions。Tentative definition、`extern` 与 linkage 的完整规则见 [008-linkage-static-and-extern](../008-linkage-static-and-extern/)。
 
@@ -55,6 +70,15 @@ Object 被定义不等于已经显式初始化。Initialization 的完整规则�
 ### Initializer
 
 Object declaration 可以通过 initialization 提供初始值。Initializer 是 initialization 语法的一部分。
+
+```c
+int count = 10;
+count = 20;
+```
+
+第一条包含 initialization；第二条是 assignment，不是 initialization。
+
+完整初始化规则见 [003-initialization](../003-initialization/)。
 
 ### Compatible Declarations
 
