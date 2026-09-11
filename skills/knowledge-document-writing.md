@@ -2,7 +2,7 @@
 
 Rules for creating new documents under `knowledge/`.
 
-These rules define how a knowledge entry should be structured before it is reviewed by `knowledge-document-review.md`.
+These rules define how a knowledge entry should be structured when it is created.
 
 The purpose of a `knowledge/` entry is:
 
@@ -77,8 +77,6 @@ Use this process when creating a new knowledge document:
 8. Add Related Knowledge
         ↓
 9. Add References
-        ↓
-10. Run knowledge-document-review.md
 ```
 
 Do not add sections merely to satisfy a template.
@@ -360,26 +358,3 @@ Avoid:
 - unnecessary transitions,
 - large code samples when a smaller one proves the same point,
 - broad background material.
-
-## 16. Final Step: Mandatory Review
-
-After drafting, apply:
-
-```text
-skills/knowledge-document-review.md
-```
-
-The writing process creates the smallest complete draft.
-
-The review process must then verify:
-
-```text
-correctness
-necessity
-boundary
-duplication
-compression
-references
-```
-
-A knowledge entry is not complete until it passes that review.
