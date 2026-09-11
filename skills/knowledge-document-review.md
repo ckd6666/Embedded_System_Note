@@ -30,8 +30,9 @@ Content should normally remain only when it does at least one of the following:
 1. Defines a core concept.
 2. Explains a core mechanism or relationship.
 3. Prevents a likely or dangerous misunderstanding.
-4. States an engineering constraint that materially affects correct usage.
-5. Establishes prerequisite knowledge required by a later chapter.
+4. Provides the minimum example necessary to clarify a core distinction.
+5. States an engineering constraint that materially affects correct usage.
+6. Establishes prerequisite knowledge required by a later chapter.
 
 If it serves none of these purposes, remove it.
 
@@ -65,7 +66,7 @@ Remove:
 - repeated conclusions,
 - motivational filler,
 - statements that merely say a concept is "important",
-- AI-generated examples, sample code, or hypothetical cases,
+- redundant examples that do not introduce a new distinction,
 - AI-generated flowcharts or teaching diagrams,
 - background knowledge not required by the chapter.
 
@@ -96,19 +97,20 @@ Prefer:
 - one precise sentence over three similar sentences,
 - compact established terminology,
 - necessary symbols or notation when they are more precise than repeated prose,
-- a small table only when it reduces repeated prose without introducing examples.
+- one decisive example when a distinction cannot be stated as clearly in prose,
+- a small table when it reduces repeated prose.
 
-Do not add examples, sample code, flowcharts, process diagrams, or teaching diagrams during review.
+Do not add flowcharts, process diagrams, or teaching diagrams during review.
 
 Compression must never sacrifice correctness.
 
-## 4. Text and Necessary Symbols Only
+## 4. Example Selection Rule
 
-During review, do not create or add examples, sample code, worked examples, hypothetical cases, flowcharts, process diagrams, or teaching diagrams.
+Examples may remain or be added only when they materially clarify a core rule or distinction.
 
-AI-authored additions must use only concise factual prose, established terminology, necessary symbols or notation, and references.
+Keep the smallest set necessary. Remove examples that merely repeat the same relationship.
 
-If an existing document already contains user-authored examples or diagrams, do not expand them unless explicitly requested.
+Do not add flowcharts, process diagrams, teaching diagrams, or illustrative diagrams.
 
 ## 5. Distinguish Core Knowledge from Detail
 
@@ -179,7 +181,7 @@ Before completing or committing a `knowledge/` document, review it in this order
 2. Deletion test, sentence by sentence.
 3. Chapter-boundary check.
 4. Remove duplicate explanations.
-5. Remove AI-generated examples, sample code, and diagrams.
+5. Remove redundant examples and all generated diagrams.
 6. Compress remaining wording.
 7. Verify links and references.
 
