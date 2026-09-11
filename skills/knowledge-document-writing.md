@@ -90,3 +90,13 @@ Use only the sections that have necessary content:
 Additional headings are allowed only when the concept requires them.
 
 Do not create separate example-oriented files such as `examples.c` or `exercises.md` unless explicitly requested.
+
+## 7. Default Layout
+
+Use numbered headings for major sections.
+
+Use hierarchical numbering for subsections when needed.
+
+Use `---` between major sections when it improves scanability.
+
+Do not add decorative separators inside ordinary paragraphs or small subsections.
