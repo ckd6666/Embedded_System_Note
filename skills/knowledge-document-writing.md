@@ -4,21 +4,40 @@ Applies to AI-authored documents under `knowledge/`.
 
 ## 1. Learning First
 
-The primary goal is to help the reader understand and learn the topic correctly.
+The primary goal is to help the reader learn the topic clearly and correctly.
 
-Documents should also remain concise, structured, and easy to revisit as references.
+Documents should remain concise, structured, and easy to revisit.
 
 Prioritize content in this order:
 
-1. concepts required to understand the topic,
-2. common rules and relationships,
-3. practical distinctions and failure-prone points,
-4. engineering constraints that affect correct use,
-5. edge cases, historical details, or rarely used features only when they materially improve understanding or application.
+1. what the concept is,
+2. what it is used for,
+3. how it is normally used,
+4. examples that make the concept concrete,
+5. core rules and relationships required to understand it.
 
-Do not let formal taxonomy, terminology, historical compatibility, or uncommon features dominate a chapter unless they are central to the topic.
+Do not let formal taxonomy, historical details, uncommon features, or secondary technical detail dominate the topic.
 
-## 2. Keep One Primary Topic
+## 2. Teach the Concept Before Expanding It
+
+When introducing a concept or a set of related concepts, explain each one before discussing relationships between them.
+
+A concept is not considered explained merely because its name appears in a list or table.
+
+For each new concept, cover the parts that are useful for learning:
+
+- basic meaning,
+- primary role or purpose,
+- normal usage,
+- a concrete example when useful.
+
+Only after the concepts themselves are clear should the document explain necessary relationships between them.
+
+Do not expand into edge cases, pitfalls, failure modes, project-specific concerns, or engineering advice unless the user explicitly asks for them.
+
+If an implementation-dependent property or special rule is part of the concept's core semantics, explain it as part of the concept itself rather than presenting it as a warning or pitfall.
+
+## 3. Keep One Primary Topic
 
 One entry should teach one concept or one tightly coupled concept set.
 
@@ -26,27 +45,27 @@ Include prerequisite or neighboring knowledge only when it is needed to understa
 
 Build the explanation in a useful learning order rather than mirroring the structure of a standard, specification, manual, or source document.
 
-## 3. Explain for Understanding
+## 4. Explain for Understanding
 
 Use the simplest wording that preserves the correct technical meaning.
 
-Introduce technical terminology when it improves precision, but explain it before relying on it. Do not replace a clear explanation with specialist vocabulary merely because an authoritative source uses that vocabulary.
+Introduce technical terminology when it improves precision, but explain it before relying on it.
 
-Actively use examples when they make an abstract rule, distinction, or practical consequence easier to understand.
+Do not replace a clear explanation with specialist vocabulary merely because an authoritative source uses that vocabulary.
 
-Prefer placing an example close to the concept it explains rather than collecting examples far away from the explanation.
+Actively use examples when they make a concept easier to understand.
 
-Use as many examples as are useful for learning. Multiple examples are encouraged when they reveal different cases, boundaries, common mistakes, or practical consequences.
+Prefer placing an example close to the concept it explains.
 
-Prefer concrete examples over abstract restatement. When useful, include contrasting examples or counterexamples to show why a distinction matters.
+Use as many examples as are useful for learning, provided each example contributes to understanding the current topic.
 
-Examples should still be relevant to the primary topic and should not become unrelated demonstrations.
+Prefer concrete examples over abstract restatement.
 
-Do not add background, history, motivation, or broad theory unless it helps explain the current topic.
+Do not add background, history, motivation, or broad theory unless it directly helps explain the current topic.
 
-## 4. Use Authoritative Sources for Correctness
+## 5. Use Authoritative Sources for Correctness
 
-Use authoritative sources to establish factual correctness, technical boundaries, and accepted terminology.
+Use authoritative sources to establish factual correctness, semantic scope, and accepted terminology.
 
 Source priority:
 
@@ -63,39 +82,42 @@ Do not invent technical rules, terminology, notation, or constraints when an est
 
 Verbatim wording may be used only when the source license, public-domain status, or other applicable permission allows it. Otherwise use accurate paraphrase or a concise quotation and keep the source in `References`.
 
-## 5. Connect Theory to Use
+## 6. Keep Knowledge in Knowledge
 
-When a concept has an important practical consequence, state it near the concept.
+A `knowledge/` document should teach the topic itself.
 
-Prioritize distinctions that help the reader:
+Do not expand the chapter into:
 
-- interpret code or systems correctly,
-- choose between related concepts,
-- avoid common misunderstandings,
-- recognize implementation-dependent behavior,
-- understand when a rule matters in practice.
+- project decisions,
+- architecture choices,
+- debugging guidance,
+- deployment concerns,
+- generic best practices,
+- risk catalogs,
+- failure-mode collections,
+- engineering checklists.
 
-Distinguish specification requirements from implementation details, engineering conventions, and recommendations.
+Those concerns belong in the relevant project or operational context unless explicitly requested.
 
-Do not turn the document into a generic best-practices list.
+Core language, protocol, hardware, or system semantics still belong in `knowledge/`, including implementation-dependent behavior when understanding it is necessary to understand the concept correctly.
 
-## 6. Keep the Document Focused
+## 7. Keep the Document Focused
 
 Every section, paragraph, table, or example should contribute to at least one of these:
 
-- understanding the primary topic,
+- explaining what the topic is,
+- explaining what it is used for,
+- showing how it is normally used,
 - explaining a core rule or relationship,
-- clarifying a necessary distinction,
-- preventing a likely misunderstanding,
-- showing a practical consequence,
+- making the concept easier to understand,
 - establishing required context,
 - supporting later lookup.
 
-Remove or link out content that is merely related, technically interesting, repetitive, or too advanced for the current topic.
+Remove or link out content that is merely related, repetitive, too advanced, or outside the topic's teaching responsibility.
 
 Conciseness must not remove explanation that is necessary for learning.
 
-## 7. Content Forms
+## 8. Content Forms
 
 Use whichever of these best explains the topic:
 
@@ -116,9 +138,9 @@ Do not use arrows, boxes, indentation, or other notation to simulate a diagram.
 
 Do not create separate example-oriented files such as `examples.c` or `exercises.md` unless explicitly requested.
 
-## 8. Default Document Shape
+## 9. Default Document Shape
 
-Use only the sections that help the topic.
+Use only the sections that help teach the topic.
 
 A common learning-oriented shape is:
 
@@ -129,22 +151,20 @@ A common learning-oriented shape is:
 
 ## Core Concepts
 
-## Important Distinctions
-
 ## Related Knowledge
 
 ## References
 ```
 
-`Overview` should establish what the reader needs to understand, not provide general background.
+`Overview` should establish what the reader is about to learn.
 
-`Important Distinctions` is optional. Use it only when the topic has concepts that are easy to confuse or misuse.
+`Core Concepts` should contain the actual teaching content and may be divided into subsections for each concept.
 
 For a narrow term or rule, `Definition` and `Core Rules` may be more appropriate than `Overview` and `Core Concepts`.
 
 Do not force every document into the same headings.
 
-## 9. Default Layout
+## 10. Default Layout
 
 Use numbered headings for major sections and hierarchical numbering for subsections when needed.
 
