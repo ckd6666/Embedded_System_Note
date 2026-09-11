@@ -6,7 +6,7 @@ These rules define how a knowledge entry should be structured when it is created
 
 The purpose of a `knowledge/` entry is:
 
-> **Accurately record one knowledge topic in a compact, reusable, reference-oriented form.**
+> **Accurately record one knowledge topic in a compact, reusable, reference-oriented form using authoritative wording and necessary symbols only.**
 
 It is not a tutorial, course chapter, essay, or motivational explanation.
 
@@ -32,7 +32,7 @@ accurate definition
     ↓
 core rules / relationships
     ↓
-minimum necessary examples
+necessary symbols / notation
 ```
 
 The first useful section should make the topic identifiable immediately.
@@ -66,7 +66,7 @@ Use this process when creating a new knowledge document:
         ↓
 3. Extract the core rules and relationships
         ↓
-4. Add the minimum necessary examples
+4. Add only necessary symbols or notation
         ↓
 5. Define the concept boundary
         ↓
@@ -89,8 +89,6 @@ When applicable, prefer this order:
 Definition
     ↓
 Core Rules / Relationships
-    ↓
-Examples
     ↓
 Related Knowledge
     ↓
@@ -160,54 +158,32 @@ Otherwise:
 
 Do not pre-teach later chapters.
 
-## 8. Minimum Example Set
+## 8. No Examples or Diagrams
 
-Examples are optional.
+When writing documents under `knowledge/`, do not generate:
 
-Add an example only when it materially clarifies a rule, relationship, syntax shape, or boundary.
+- examples,
+- sample code,
+- worked examples,
+- flowcharts,
+- process diagrams,
+- teaching diagrams.
 
-The goal is not:
+Use only:
 
-```text
-one example per subsection
-```
+- concise prose,
+- necessary terminology,
+- necessary operators, symbols, equations, syntax fragments, or notation.
 
-The goal is:
+Symbols and notation should appear only when they are required to state the knowledge accurately or compactly.
 
-```text
-the smallest set of examples that makes the concept distinguishable
-```
+## 9. Prefer Compact Contrast When a Distinction Is the Core Knowledge
 
-For example, explaining declarators may require both:
+When two concepts must be distinguished, prefer concise prose or compact symbolic relationships over repeated explanation.
 
-```c
-int value;
-int *p;
-```
+For instance, relationships such as `definition ⊂ declaration` or `definition ≠ initialization` are acceptable when they state the distinction precisely.
 
-because they demonstrate two different declarator shapes.
-
-Do not add several examples that demonstrate the same relationship.
-
-## 9. Prefer Contrast When a Distinction Is the Core Knowledge
-
-When two concepts are commonly confused, a compact contrast is preferred over two long explanations.
-
-For example:
-
-| Concept | Meaning |
-| --- | --- |
-| identifier | source-level name |
-| object | data-storage entity |
-
-Or:
-
-```text
-definition ⊂ declaration
-definition ≠ initialization
-```
-
-Use tables only when they reduce repeated prose.
+Use tables only when they reduce repeated prose and contain no invented examples.
 
 ## 10. Engineering Constraints Stay Local
 
@@ -269,6 +245,28 @@ The document must remain understandable without opening the references.
 
 References exist for verification, traceability, and deeper lookup.
 
+## 11.1 Authority and Wording Rule
+
+The factual content, terminology, and symbols used in a knowledge document should be grounded primarily in highly recognized authoritative sources.
+
+Prefer:
+
+```text
+standard / official specification
+        ↓
+official implementation or platform documentation
+        ↓
+recognized engineering standard or institutional guidance
+        ↓
+high-quality technical reference
+```
+
+When authoritative wording is already clear and compact, preserve its technical meaning closely.
+
+Short quotations or minor wording adjustments are acceptable when appropriate, but do not reproduce long copyrighted passages verbatim. Prefer concise quotation, close technical paraphrase, or reorganization while preserving the authoritative meaning.
+
+Do not invent terminology, notation, rules, or explanatory models when an established authoritative formulation already exists.
+
 ## 12. Avoid Duplicate Ownership
 
 A concept should have one primary home.
@@ -283,22 +281,14 @@ This prevents multiple versions of the same knowledge from diverging.
 
 ## 13. Default Entry Files
 
-The default entry structure is:
+The default AI-authored entry structure is:
 
 ```text
 NNN-topic/
-├── README.md
-├── examples.c
-└── exercises.md
+└── README.md
 ```
 
-Rules:
-
-- `README.md` — required.
-- `examples.c` — optional; create only when runnable or compiler-observable examples add value.
-- `exercises.md` — optional; create only when explicitly useful for the knowledge entry.
-
-Do not create empty optional files.
+AI should not create `examples.c`, `exercises.md`, or other example-oriented files as part of normal knowledge-document writing.
 
 ## 14. Default README Shape
 
@@ -312,10 +302,6 @@ A useful default shape is:
 ...
 
 ## Core Rules
-
-...
-
-## Examples
 
 ...
 
@@ -345,8 +331,8 @@ Prefer:
 
 - direct definitions,
 - compact relationships,
-- small tables,
-- minimal code,
+- small tables when they reduce prose,
+- necessary symbols or syntax fragments,
 - stable terminology,
 - relative links.
 
@@ -356,5 +342,7 @@ Avoid:
 - motivational language,
 - repeated summaries,
 - unnecessary transitions,
-- large code samples when a smaller one proves the same point,
+- code samples,
+- examples,
+- flowcharts or teaching diagrams,
 - broad background material.
