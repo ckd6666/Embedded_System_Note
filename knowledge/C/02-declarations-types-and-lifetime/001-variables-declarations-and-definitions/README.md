@@ -4,9 +4,9 @@
 
 | Concept | Definition |
 | --- | --- |
-| identifier | 源程序中用作名称的 identifier。 |
+| identifier | 由 identifier-start 后接零个或多个 identifier-continue 字符组成、用于指示一个或多个实体的词法记号。 |
 | object | 执行环境中的数据存储区域，其内容可以表示值。 |
-| variable | 常用工程术语。本仓库在一般表述中用于被声明和访问的 object；涉及标准语义时优先使用 `object`。 |
+| variable | 常用工程术语；涉及 ISO C 的精确语义时优先使用 `object`。 |
 | declaration | 指定一组 identifiers 的解释和属性。 |
 | declarator | declaration 中包含被声明 identifier（若有），并可提供附加类型信息的部分。 |
 | definition | declaration 的一种；对于 object，definition 使该 object 的存储被保留。 |
@@ -22,9 +22,9 @@
 
 ### Identifier and Object
 
-Identifier 是源程序中的名称；object 是执行环境中的数据存储实体。Object 是否具有 identifier 取决于其产生方式，因此不能把 identifier 与 object 等同。
+Identifier 用于指示实体；object 是执行环境中的数据存储实体，因此二者不是同一概念。
 
-Object 的类型、storage duration、lifetime 等属性分别由其他语言规则决定。本条目只保留 identifier 与 object 的区别。
+Object 的类型、storage duration 和 lifetime 分别由其他语言规则规定。
 
 ### Declaration
 
@@ -55,8 +55,6 @@ Object 被定义不等于已经显式初始化。Initialization 的完整规则�
 ### Initializer
 
 Object declaration 可以通过 initialization 提供初始值。Initializer 是 initialization 语法的一部分。
-
-Initialization 与 assignment 不同：initialization 建立 object 的初始值；assignment 修改已经存在的 object 的值。
 
 ### Compatible Declarations
 
