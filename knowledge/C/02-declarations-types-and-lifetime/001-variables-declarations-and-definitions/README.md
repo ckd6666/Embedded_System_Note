@@ -206,61 +206,257 @@ int count;
 
 ### 3.2 Object 不一定有名字
 
-不要把：
+最容易形成的误解是：
 
 ```text
 object = variable name
 ```
 
-当成严格定义。
-
-一个 object 可以有 identifier，也可以没有。
-
-因此更准确的方向是：
+其实这两个概念不在同一个层次：
 
 ```text
 identifier
     ↓
-可以用来命名一个 object
+源码里的名字
 
 object
     ↓
-实际的数据存储实体
+程序运行时实际存在的数据存储实体
 ```
 
----
-
-### 3.3 Variable — 本仓库中的使用方式
-
-工程交流里我们经常说：
+最普通的情况是：
 
 ```c
-int temperature;
+int count = 10;
 ```
 
-“定义了一个变量 `temperature`”。
-
-这个说法完全适合作为日常工程语言。
-
-但在讨论标准语义时，本仓库优先使用：
+这里可以拆成：
 
 ```text
-identifier + object
-```
-
-例如：
-
-```text
-temperature
+count
     ↓
 identifier
 
 它命名
     ↓
 一个 int object
+
+这个 object 当前保存
+    ↓
+10
 ```
 
-这样后面讨论 unnamed object、storage duration、lifetime 和 aliasing 时不会受到“变量就是一个名字”的错误模型限制。
+所以这里既有“名字”，也有“object”。
+
+但 C 里也可以出现 **没有 identifier 的 object**。
+
+#### 最小例子 1：compound literal
+
+```c
+(int){42}
+```
+
+这里会产生一个 `int` object，它的值是 `42`。
+
+但是源码里没有类似：
+
+```c
+int count = 42;
+```
+
+这样的 identifier。
+
+可以理解为：
+
+```text
+(int){42}
+    ↓
+一个 int object
+
+value = 42
+
+但没有像 count 这样的名字
+```
+
+#### 最小例子 2：string literal
+
+```c
+"hello"
+```
+
+这个 string literal 对应一个字符数组 object，其中包含：
+
+```text
+'h' 'e' 'l' 'l' 'o' '\0'
+```
+
+但这个数组 object 本身没有一个你在源码中声明的 identifier。
+
+也就是说：
+
+```text
+有 object
+≠
+一定有 identifier
+```
+
+#### 最小例子 3：以后会遇到的动态分配对象
+
+先不用理解 `malloc()` 的细节，只看关系：
+
+```c
+int *p = malloc(sizeof(int));
+```
+
+这里有两个不同层次的东西：
+
+```text
+p
+    ↓
+identifier
+
+p 自己命名
+    ↓
+一个 pointer object
+
+malloc 得到的那块存储
+    ↓
+另一个 object / allocated region
+    ↓
+没有自己的 identifier
+```
+
+以后通常通过：
+
+```c
+*p
+```
+
+间接访问那块存储。
+
+所以本节真正想让你记住的是：
+
+> **identifier 是名字，object 是实体；object 可以有名字，也可以没有名字。**
+
+当前阶段不需要深入 unnamed object，只要避免把“object”和“变量名”当成同一个概念即可。
+
+---
+
+### 3.3 Variable — 本仓库中的使用方式
+
+工程交流里，我们通常不会每次都说：
+
+> identifier `temperature` 命名了一个 `int` object。
+
+而会直接说：
+
+> 定义了一个变量 `temperature`。
+
+例如：
+
+```c
+int temperature = 25;
+```
+
+可以从两个层次理解。
+
+#### 日常工程说法
+
+```text
+temperature 是一个 int 变量
+当前值是 25
+```
+
+这样说完全没有问题，也是本仓库大多数普通讲解会采用的表达。
+
+#### 严格语义拆解
+
+```text
+temperature
+    ↓
+identifier
+
+int
+    ↓
+type
+
+temperature 命名
+    ↓
+一个 int object
+
+这个 object 当前保存
+    ↓
+25
+```
+
+因此可以暂时把 variable 理解为：
+
+> **日常编程中，对“一个通过 identifier 访问的 object”的常用称呼。**
+
+不过不要反过来得到：
+
+```text
+所有 object 都一定是有名字的 variable
+```
+
+因为上一节已经看到：
+
+```c
+(int){42}
+"hello"
+```
+
+这类 object 并没有用户声明的 identifier。
+
+### 3.4 当前阶段怎么记最合适
+
+先记下面三个层次就够了：
+
+| 概念 | 当前阶段的理解 |
+| --- | --- |
+| identifier | 源码里的名字，例如 `count` |
+| object | 程序执行时真正保存数据的实体 |
+| variable | 工程上通常指“有名字、可以访问的 object” |
+
+例如：
+
+```c
+int count = 10;
+```
+
+可以读成：
+
+```text
+count
+    ↓
+identifier
+
+int
+    ↓
+type
+
+保存 10 的实体
+    ↓
+object
+
+日常统称
+    ↓
+variable count
+```
+
+最重要的是不要混淆：
+
+```text
+identifier ≠ object
+```
+
+而在普通代码交流中，说：
+
+```text
+count 是一个变量
+```
+
+完全可以。
 
 ---
 
