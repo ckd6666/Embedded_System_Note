@@ -8,13 +8,7 @@ Primary rule:
 
 The same standard applies to the knowledge document being written: keep only content required for a correct, compact reference entry.
 
-## 1. Determine Ownership and Boundary
-
-Before writing, use the domain and module `README.md` files to determine:
-
-- the primary concept owned by the entry,
-- the module boundary,
-- related concepts owned elsewhere.
+## 1. Keep One Primary Concept
 
 One entry owns one concept or one tightly coupled concept set.
 
