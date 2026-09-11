@@ -1,6 +1,10 @@
 # Variables, Declarations, and Definitions
 
+---
+
 ## 1. Definition
+
+---
 
 | Concept | Definition |
 | --- | --- |
@@ -22,6 +26,8 @@
 
 ## 2. Core Rules
 
+---
+
 ### 2.1 Identifier and Object
 
 Identifier 用于指示实体；object 是执行环境中的数据存储实体，因此二者不是同一概念。
@@ -33,6 +39,8 @@ int count = 10;
 其中 `count` 是 identifier；它指示一个类型为 `int` 的 object。
 
 Object 的类型、storage duration 和 lifetime 分别由其他语言规则规定。
+
+---
 
 ### 2.2 Declaration and Declarator
 
@@ -52,6 +60,8 @@ Declarator 不等同于 identifier。完整的 pointer、array 和 function decl
 
 Identifier 在使用前必须具有适用的 declaration；见 SEI CERT C DCL31-C。
 
+---
+
 ### 2.3 Definition
 
 Definition 是 declaration 的一种。
@@ -69,6 +79,8 @@ File scope 下某些 object declarations 属于 tentative definitions。Tentativ
 
 Object 被定义不等于已经显式初始化。Initialization 的完整规则见 [003-initialization](../003-initialization/)。
 
+---
+
 ### 2.4 Initializer
 
 Object declaration 可以通过 initialization 提供初始值。Initializer 是 initialization 语法的一部分。
@@ -82,6 +94,8 @@ count = 20;
 
 完整初始化规则见 [003-initialization](../003-initialization/)。
 
+---
+
 ### 2.5 Compatible Declarations
 
 同一 scope 中引用同一 object 或 function 的 declarations 必须指定 compatible types。
@@ -91,6 +105,8 @@ SEI CERT C DCL40-C 同样要求不得为同一 function 或 object 创建 incomp
 ---
 
 ## 3. Related Knowledge
+
+---
 
 - [002-fundamental-types](../002-fundamental-types/) — fundamental types
 - [003-initialization](../003-initialization/) — initialization
@@ -104,6 +120,8 @@ SEI CERT C DCL40-C 同样要求不得为同一 function 或 object 创建 incomp
 ---
 
 ## 4. References
+
+---
 
 1. **ISO/IEC 9899:2024 (C23), 6.7 Declarations** — declaration, definition, declaration specifiers, declarators.
 2. **WG14 N3220 — ISO/IEC 9899:2024 working draft**  
