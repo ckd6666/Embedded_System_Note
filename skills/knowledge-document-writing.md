@@ -23,17 +23,7 @@ Do not begin with:
 - historical context,
 - general introductions.
 
-Prefer:
-
-```text
-concept
-    ↓
-accurate definition
-    ↓
-core rules / relationships
-    ↓
-necessary symbols / notation
-```
+Prefer this content order: concept definition, core rules or relationships, then only the symbols or notation required to state them precisely.
 
 The first useful section should make the topic identifiable immediately.
 
@@ -59,41 +49,21 @@ If another entry owns a concept:
 
 Use this process when creating a new knowledge document:
 
-```text
-1. Determine the primary concept
-        ↓
-2. Write an accurate, direct definition
-        ↓
-3. Extract the core rules and relationships
-        ↓
-4. Add only necessary symbols or notation
-        ↓
-5. Define the concept boundary
-        ↓
-6. Replace out-of-scope detail with links
-        ↓
-7. Place engineering constraints next to the concept they constrain
-        ↓
-8. Add Related Knowledge
-        ↓
-9. Add References
-```
+1. Determine the primary concept.
+2. Write an accurate, direct definition.
+3. Extract the core rules and relationships.
+4. Add only necessary symbols or notation.
+5. Define the concept boundary.
+6. Replace out-of-scope detail with links.
+7. Place engineering constraints next to the concept they constrain.
+8. Add Related Knowledge.
+9. Add References.
 
 Do not add sections merely to satisfy a template.
 
 ## 4. Default Information Order
 
-When applicable, prefer this order:
-
-```text
-Definition
-    ↓
-Core Rules / Relationships
-    ↓
-Related Knowledge
-    ↓
-References
-```
+When applicable, prefer this order: Definition; Core Rules / Relationships; Related Knowledge; References.
 
 This is an information order, not a mandatory heading structure.
 
@@ -125,20 +95,7 @@ Do not replace a precise definition with only an analogy.
 
 After the definition, record only the relationships required to use or distinguish the concept correctly.
 
-Examples:
-
-```text
-definition ⊂ declaration
-```
-
-```text
-identifier ≠ object
-```
-
-```text
-declaration specifiers + declarator
-→ determine the complete declared type
-```
+Necessary symbolic relationships are allowed when they state the knowledge more precisely or compactly, such as `definition ⊂ declaration`, `identifier ≠ object`, or `declaration specifiers + declarator → complete declared type`.
 
 Prefer compact relationships over repeated prose when both express the same fact.
 
@@ -158,24 +115,27 @@ Otherwise:
 
 Do not pre-teach later chapters.
 
-## 8. No Examples or Diagrams
+## 8. Text and Necessary Symbols Only
 
-When writing documents under `knowledge/`, do not generate:
+When writing documents under `knowledge/`, AI must not generate:
 
 - examples,
 - sample code,
 - worked examples,
+- hypothetical cases,
 - flowcharts,
 - process diagrams,
-- teaching diagrams.
+- teaching diagrams,
+- illustrative diagrams.
 
-Use only:
+AI-authored content must consist only of:
 
-- concise prose,
-- necessary terminology,
-- necessary operators, symbols, equations, syntax fragments, or notation.
+- concise factual prose,
+- established terminology,
+- necessary operators, symbols, equations, syntax fragments, or notation,
+- references and links.
 
-Symbols and notation should appear only when they are required to state the knowledge accurately or compactly.
+Symbols and notation may appear only when they are required to state the knowledge accurately or more compactly. Do not use arrows, boxes, indentation, or other notation to imitate a flowchart.
 
 ## 9. Prefer Compact Contrast When a Distinction Is the Core Knowledge
 
@@ -191,17 +151,7 @@ Engineering rules should be placed next to the language concept they constrain.
 
 Do not collect unrelated rules into a generic `Best Practices` section.
 
-Prefer:
-
-```text
-reserved identifiers
-    ↓
-language rule
-    ↓
-local engineering convention
-```
-
-rather than repeating the same rule again at the end of the document.
+Place the language rule and any local engineering convention together under the relevant concept rather than repeating the same rule again at the end of the document.
 
 Recognized guidance such as SEI CERT C, MISRA C, BARR-C, compiler documentation, or platform documentation may supplement the language rule.
 
@@ -221,15 +171,10 @@ engineering convention / project rule
 
 Prefer sources in this order:
 
-```text
-language standard / official specification
-        ↓
-official implementation or platform documentation
-        ↓
-recognized engineering standards and guidance
-        ↓
-high-quality technical references
-```
+1. Language standard or official specification.
+2. Official implementation or platform documentation.
+3. Recognized engineering standards and institutional guidance.
+4. Highly recognized technical references or websites.
 
 For C, typical sources include:
 
@@ -249,21 +194,9 @@ References exist for verification, traceability, and deeper lookup.
 
 The factual content, terminology, and symbols used in a knowledge document should be grounded primarily in highly recognized authoritative sources.
 
-Prefer:
+Use authoritative sources as the factual and terminological baseline. Prefer standards, official specifications, official documentation, recognized engineering standards, institutional guidance, and highly recognized technical references or websites.
 
-```text
-standard / official specification
-        ↓
-official implementation or platform documentation
-        ↓
-recognized engineering standard or institutional guidance
-        ↓
-high-quality technical reference
-```
-
-When authoritative wording is already clear and compact, preserve its technical meaning closely.
-
-Short quotations or minor wording adjustments are acceptable when appropriate, but do not reproduce long copyrighted passages verbatim. Prefer concise quotation, close technical paraphrase, or reorganization while preserving the authoritative meaning.
+Established wording may be copied verbatim when the source license, public-domain status, or other applicable permission allows it. Otherwise, preserve the technical meaning with concise quotation or accurate paraphrase and keep the source in References.
 
 Do not invent terminology, notation, rules, or explanatory models when an established authoritative formulation already exists.
 
