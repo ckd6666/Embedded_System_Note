@@ -30,7 +30,7 @@ A source file can contain function definitions, object definitions, declarations
 
 ## Header Files
 
-Header files normally use the `.h` extension and expose declarations or definitions that need to be shared.
+Header files normally use the `.h` extension and expose declarations that need to be shared.
 
 ```c
 // led.h
@@ -104,7 +104,7 @@ math.c   -> definitions
 main.c   -> includes math.h and uses the interface
 ```
 
-For deeper rules about visibility and linkage, see `../../scope-lifetime-and-linkage/`.
+For deeper rules about scope, storage duration, and linkage, see `../../02-declarations-types-and-lifetime/`.
 
 ## Translation Unit
 

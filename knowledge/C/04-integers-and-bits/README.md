@@ -1,4 +1,4 @@
-# Integers and Bits
+# 04 — Integers and Bits
 
 Integer semantics and bit-level operations used heavily in embedded C.
 
@@ -9,10 +9,12 @@ Integer semantics and bit-level operations used heavily in embedded C.
 - signed and unsigned behavior
 - integer promotions
 - usual arithmetic conversions
+- narrowing conversions
 - overflow and wraparound
 - bitwise operators
 - shift operators
-- masks, set/clear/toggle/test patterns
+- masks
+- set, clear, toggle, and test patterns
 
 ## Look Here When
 

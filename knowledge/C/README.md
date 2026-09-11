@@ -2,28 +2,35 @@
 
 Reusable C knowledge for embedded systems development.
 
-This directory is organized by **problem domain**, not by textbook chapter order. The primary goal is fast lookup during embedded development, debugging, and review. A separate learning path is provided below without encoding learning order into directory names.
+This knowledge base is organized for two use cases:
 
-## Organization
+1. **Lookup** — quickly locate the concept behind a problem encountered during embedded development.
+2. **Learning and review** — follow a recommended path without coupling that path to the physical directory layout.
+
+The classification is inspired by established C and embedded-C bodies of knowledge, especially ISO C, SEI CERT C, MISRA C, and BARR-C. The structure adapts those systems for practical embedded learning and reference rather than copying any one standard verbatim.
+
+## Structure
 
 ```text
 C/
 ├── README.md
-├── language-basics/
-├── types-and-values/
-├── integers-and-bits/
-├── expressions-and-control-flow/
-├── functions-and-interfaces/
-├── pointers-arrays-and-buffers/
-├── objects-and-data-layout/
-├── scope-lifetime-and-linkage/
-├── preprocessor-and-build/
-├── hardware-access/
-├── concurrency-and-interrupts/
-└── reliability-and-portability/
+├── 01-preprocessor-and-build/
+├── 02-declarations-types-and-lifetime/
+├── 03-expressions-and-control-flow/
+├── 04-integers-and-bits/
+├── 05-arrays-strings-and-buffers/
+├── 06-pointers-and-memory/
+├── 07-objects-and-data-layout/
+├── 08-functions-and-api/
+├── 09-error-handling/
+├── 10-hardware-access/
+├── 11-concurrency-and-interrupts/
+└── 12-reliability-and-portability/
 ```
 
-Each module owns one problem domain. Knowledge entries inside a module use:
+The two-digit module number gives each knowledge domain a stable catalog position. It is **not** a strict prerequisite order.
+
+Inside each module, concrete knowledge entries use:
 
 ```text
 NNN-name/
@@ -34,86 +41,94 @@ Numbering is local to the module. Use the next available number and never renumb
 
 ## Module Index
 
-| Module | Main concerns |
-| --- | --- |
-| [language-basics](./language-basics/) | Core C syntax, declarations, statements, and basic control structures |
-| [types-and-values](./types-and-values/) | Fundamental types, qualifiers, `typedef`, `enum`, values, and representations at the language level |
-| [integers-and-bits](./integers-and-bits/) | Fixed-width integers, signed/unsigned rules, promotions, conversions, overflow, shifts, masks, and bit operations |
-| [expressions-and-control-flow](./expressions-and-control-flow/) | Operators, precedence, sequencing, side effects, conditions, loops, and `switch` |
-| [functions-and-interfaces](./functions-and-interfaces/) | Function declarations, parameters, return values, callbacks, function pointers, and C API design |
-| [pointers-arrays-and-buffers](./pointers-arrays-and-buffers/) | Pointers, arrays, strings, pointer arithmetic, buffers, bounds, and `void *` |
-| [objects-and-data-layout](./objects-and-data-layout/) | `struct`, `union`, padding, alignment, endianness, object representation, and aliasing |
-| [scope-lifetime-and-linkage](./scope-lifetime-and-linkage/) | Scope, storage duration, lifetime, `static`, `extern`, globals, locals, and dynamic storage |
-| [preprocessor-and-build](./preprocessor-and-build/) | Source/header organization, macros, includes, translation units, compilation, linking, symbols, and sections |
-| [hardware-access](./hardware-access/) | Memory-mapped I/O, `volatile`, register access, read-modify-write, and hardware-facing C patterns |
-| [concurrency-and-interrupts](./concurrency-and-interrupts/) | ISR/main sharing, atomicity, races, reentrancy, critical sections, and C atomics where applicable |
-| [reliability-and-portability](./reliability-and-portability/) | Undefined, unspecified, and implementation-defined behavior; optimization, diagnostics, portability, and coding standards |
+| No. | Module | Main concerns |
+| --- | --- | --- |
+| 01 | [Preprocessor and Build](./01-preprocessor-and-build/) | Source/header organization, preprocessing, macros, translation units, compilation, linking, symbols, and sections |
+| 02 | [Declarations, Types, and Lifetime](./02-declarations-types-and-lifetime/) | Declarations, definitions, types, qualifiers, scope, storage duration, lifetime, linkage, `static`, and `extern` |
+| 03 | [Expressions and Control Flow](./03-expressions-and-control-flow/) | Operators, precedence, sequencing, side effects, conditions, loops, and `switch` |
+| 04 | [Integers and Bits](./04-integers-and-bits/) | Integer widths, signed/unsigned rules, promotions, conversions, overflow, shifts, masks, and bit operations |
+| 05 | [Arrays, Strings, and Buffers](./05-arrays-strings-and-buffers/) | Arrays, strings, bounds, explicit lengths, multidimensional arrays, and embedded buffers |
+| 06 | [Pointers and Memory](./06-pointers-and-memory/) | Pointer semantics, pointer arithmetic, `void *`, null/invalid pointers, ownership, and dynamic storage |
+| 07 | [Objects and Data Layout](./07-objects-and-data-layout/) | `struct`, `union`, size, alignment, padding, endianness, object representation, bit-fields, and aliasing |
+| 08 | [Functions and API](./08-functions-and-api/) | Function declarations, parameters, return values, callbacks, function pointers, API design, and validation |
+| 09 | [Error Handling](./09-error-handling/) | Status codes, error propagation, assertions, timeouts, failure reporting, and recovery patterns |
+| 10 | [Hardware Access](./10-hardware-access/) | Memory-mapped I/O, `volatile`, register access, read-modify-write, and hardware-visible side effects |
+| 11 | [Concurrency and Interrupts](./11-concurrency-and-interrupts/) | ISR/main sharing, races, atomicity, reentrancy, critical sections, and C atomics where applicable |
+| 12 | [Reliability and Portability](./12-reliability-and-portability/) | Undefined/unspecified/implementation-defined behavior, optimization, diagnostics, static analysis, MISRA, CERT, and portability |
 
 ## Quick Lookup
 
 | Problem or symptom | Start here |
 | --- | --- |
-| `uint8_t + uint8_t` behaves unexpectedly | [integers-and-bits](./integers-and-bits/) |
-| Signed/unsigned comparison gives a surprising result | [integers-and-bits](./integers-and-bits/) |
-| A shift or register mask is wrong | [integers-and-bits](./integers-and-bits/) |
-| Pointer access causes a fault | [pointers-arrays-and-buffers](./pointers-arrays-and-buffers/) |
-| Buffer, array, or string is corrupted | [pointers-arrays-and-buffers](./pointers-arrays-and-buffers/) |
-| `sizeof(struct)` is larger than expected | [objects-and-data-layout](./objects-and-data-layout/) |
-| Protocol bytes appear in the wrong order | [objects-and-data-layout](./objects-and-data-layout/) |
-| Unsure what `static` or `extern` means in context | [scope-lifetime-and-linkage](./scope-lifetime-and-linkage/) |
-| Header include or macro behaves unexpectedly | [preprocessor-and-build](./preprocessor-and-build/) |
-| Linker reports an undefined or duplicate symbol | [preprocessor-and-build](./preprocessor-and-build/) |
-| Peripheral register access is optimized away or behaves oddly | [hardware-access](./hardware-access/) |
-| ISR and main/RTOS code share data incorrectly | [concurrency-and-interrupts](./concurrency-and-interrupts/) |
-| Debug build works but optimized build fails | [reliability-and-portability](./reliability-and-portability/) |
+| Header, macro, include, or build-stage problem | [01-preprocessor-and-build](./01-preprocessor-and-build/) |
+| `static`, `extern`, scope, lifetime, or type declaration is unclear | [02-declarations-types-and-lifetime](./02-declarations-types-and-lifetime/) |
+| Expression result or control flow is surprising | [03-expressions-and-control-flow](./03-expressions-and-control-flow/) |
+| Signed/unsigned, integer promotion, overflow, shift, or mask issue | [04-integers-and-bits](./04-integers-and-bits/) |
+| Array, string, UART/SPI/DMA buffer, or bounds problem | [05-arrays-strings-and-buffers](./05-arrays-strings-and-buffers/) |
+| Pointer fault, invalid address, `void *`, or dynamic memory issue | [06-pointers-and-memory](./06-pointers-and-memory/) |
+| `sizeof(struct)`, padding, alignment, endian, protocol layout, or aliasing issue | [07-objects-and-data-layout](./07-objects-and-data-layout/) |
+| Callback, function pointer, parameter, return value, or driver API issue | [08-functions-and-api](./08-functions-and-api/) |
+| Timeout, status code, assertion, or failure-propagation design | [09-error-handling](./09-error-handling/) |
+| Peripheral register or memory-mapped I/O behaves unexpectedly | [10-hardware-access](./10-hardware-access/) |
+| ISR/main/RTOS contexts share data incorrectly | [11-concurrency-and-interrupts](./11-concurrency-and-interrupts/) |
+| Debug works but optimized/release build fails, or code is compiler/target dependent | [12-reliability-and-portability](./12-reliability-and-portability/) |
 
-When a problem spans modules, start with the module that best matches the **observed symptom**, then follow cross-links from the relevant entry.
+When a problem spans modules, start with the module that best matches the **observed symptom**, then follow cross-links.
 
-## Learning Path
+## Recommended Learning Path
 
-Directory structure is for lookup. The recommended learning path is separate:
+The physical module numbers are stable catalog positions, not mandatory learning order. A practical embedded-C learning path is:
 
 ```text
-language-basics
-    ↓
-types-and-values
-    ↓
-expressions-and-control-flow
-    ↓
-functions-and-interfaces
-    ↓
-pointers-arrays-and-buffers
-    ↓
-integers-and-bits
-    ↓
-objects-and-data-layout
-    ↓
-scope-lifetime-and-linkage
-    ↓
-preprocessor-and-build
-    ↓
-hardware-access
-    ↓
-concurrency-and-interrupts
-    ↓
-reliability-and-portability
+02 declarations, types, and lifetime
+        ↓
+03 expressions and control flow
+        ↓
+08 functions and API
+        ↓
+05 arrays, strings, and buffers
+        ↓
+06 pointers and memory
+        ↓
+04 integers and bits
+        ↓
+07 objects and data layout
+        ↓
+01 preprocessor and build
+        ↓
+10 hardware access
+        ↓
+09 error handling
+        ↓
+11 concurrency and interrupts
+        ↓
+12 reliability and portability
 ```
 
-The path is guidance, not a dependency graph. Entries should remain useful as independent references.
+The path is guidance only. Individual entries should remain useful as references.
 
 ## Entry Rules
 
 1. Put an entry in the module that owns its **primary concept**.
-2. Do not duplicate the same explanation in multiple modules; use relative links for related concepts.
-3. Keep one entry focused on one reusable concept or tightly coupled concept set.
-4. Prefer examples that are relevant to embedded C.
+2. Do not duplicate a full explanation across modules; use relative links for related concepts.
+3. Keep one entry focused on one reusable concept or a tightly coupled concept set.
+4. Prefer examples relevant to embedded C.
 5. Explain important failure modes next to the concept that causes them.
-6. Undefined behavior should be explained locally where it occurs and may also be indexed from `reliability-and-portability/`.
-7. Module `README.md` files act as indexes and scope definitions, not long-form chapters.
-8. Add entries only when they are actually learned or needed; do not pre-create empty numbered entries.
+6. Undefined behavior should be explained locally where it occurs and may also be indexed from `12-reliability-and-portability/`.
+7. Module `README.md` files define scope and act as indexes; long-form knowledge belongs in numbered entries.
+8. Add entries only when actually learned or needed. Do not pre-create empty numbered entries.
+9. Preserve existing entry numbers. New entries use the next available number within their module.
+10. Project-specific implementation details belong in `projects/`, not in this reusable knowledge base.
 
 ## Reference Baseline
 
-Use the C language standard as the semantic baseline. For embedded engineering practice, use safety and reliability guidance such as MISRA C, SEI CERT C, and established embedded C coding standards as secondary references.
+Use the C language standard as the semantic baseline.
 
-Project-specific rules belong in `projects/`, not here.
+For engineering practice and review, use recognized guidance such as:
+
+- ISO C — language semantics and normative behavior
+- SEI CERT C — secure and reliable C rules organized by problem domain
+- MISRA C — predictable, analyzable C for critical and embedded systems
+- BARR-C — practical embedded-C coding guidance
+
+These references inform the knowledge organization; this repository remains a learning and lookup system rather than a substitute for the standards themselves.

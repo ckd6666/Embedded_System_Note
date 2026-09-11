@@ -1,14 +1,13 @@
-# Preprocessor and Build
+# 01 — Preprocessor and Build
 
-How C source is organized and transformed into an executable or firmware image.
+How C source is organized, transformed, compiled, and linked into an executable or firmware image.
 
 ## Scope
 
 - `.c` and `.h` responsibilities
 - declarations versus definitions across files
-- `#include`
-- header guards
-- macros
+- `#include` and header guards
+- object-like and function-like macros
 - conditional compilation
 - translation units
 - preprocessing, compilation, assembly, and linking
@@ -17,7 +16,7 @@ How C source is organized and transformed into an executable or firmware image.
 
 ## Look Here When
 
-Headers, macros, build stages, translation units, symbols, or linker errors are involved.
+Headers, macros, build stages, translation units, symbols, linker errors, or firmware sections are involved.
 
 ## Entries
 
