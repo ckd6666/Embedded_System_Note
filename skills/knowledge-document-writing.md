@@ -2,12 +2,6 @@
 
 Applies to AI-authored documents under `knowledge/`.
 
-Primary rule:
-
-> **If deleting an instruction would not change the AI's correct behavior, delete the instruction.**
-
-The same standard applies to the knowledge document being written: keep only content required for a correct, compact reference entry.
-
 ## 1. Keep One Primary Concept
 
 One entry owns one concept or one tightly coupled concept set.
