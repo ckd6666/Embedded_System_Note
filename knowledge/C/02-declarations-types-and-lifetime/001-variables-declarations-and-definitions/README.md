@@ -592,61 +592,170 @@ SEI CERT C DCL31-C 将“使用前声明 identifier”作为明确规则。
 
 ## 6. Declarator — 声明符
 
-这是上一版最需要补强的概念之一。
+这一节只需要先解决一个问题：
 
-看：
+> **declarator 到底是什么，为什么它不只是“变量名”的另一个叫法？**
+
+最简单的答案是：
+
+> **declarator 是围绕 identifier 的那部分声明语法，它和前面的 declaration specifiers 一起决定被声明实体的完整类型。**
+
+先不要试图一次掌握复杂声明。只看四个最小例子。
+
+---
+
+### 6.1 从最简单的声明开始
 
 ```c
-int count = 10;
+int count;
 ```
 
-可以先拆成：
+拆开：
 
 ```text
-int          count        = 10
-│            │              │
-│            │              └── initialization part
-│            └───────────────── declarator
-└────────────────────────────── declaration specifier
+int        count
+│          │
+│          └── declarator
+└───────────── type specifier
 ```
 
-这里最简单的 declarator 就是：
+这里 declarator 恰好只有：
 
 ```text
 count
 ```
 
-它同时包含 identifier。
+而 `count` 同时也是 identifier。
 
-但 declarator 不总是只有一个名字。
+所以在最简单的声明里：
 
-以后会看到：
+```text
+declarator = identifier
+```
+
+这也是为什么初学时很容易误以为：
+
+> declarator 只是“变量名”的专业叫法。
+
+但一旦声明稍微复杂，这个等式就不成立了。
+
+---
+
+### 6.2 Declarator 可以包含 identifier 周围的类型结构
+
+比较下面四条声明：
 
 ```c
+int count;
 int *p;
 int buffer[16];
 int read_value(void);
 ```
 
-其中：
+它们都以 `int` 为基础 type specifier，但 declarator 不同：
+
+| Declaration | Type specifier | Declarator | Identifier | 最终含义 |
+| --- | --- | --- | --- | --- |
+| `int count;` | `int` | `count` | `count` | `count` 是 `int` object |
+| `int *p;` | `int` | `*p` | `p` | `p` 是 pointer to `int` |
+| `int buffer[16];` | `int` | `buffer[16]` | `buffer` | `buffer` 是 array of 16 `int` |
+| `int read_value(void);` | `int` | `read_value(void)` | `read_value` | `read_value` 是返回 `int` 的 function |
+
+所以：
 
 ```text
+identifier
+```
+
+只是 declarator 里面真正的“名字”。
+
+而：
+
+```text
+*
+[]
+()
+```
+
+这些围绕 identifier 的语法也属于 declarator，并参与决定完整类型。
+
+---
+
+### 6.3 最重要的反例：`int *p, value;`
+
+看：
+
+```c
+int *p, value;
+```
+
+如果误把：
+
+```text
+int *
+```
+
+整体当成“左边的类型”，很容易误以为：
+
+```text
+p     → pointer to int
+value → pointer to int
+```
+
+但实际不是。
+
+正确拆解是：
+
+```text
+int
+    ↓
+共同的 type specifier
+
 *p
-buffer[16]
-read_value(void)
+    ↓
+第一个 declarator
+
+value
+    ↓
+第二个 declarator
 ```
 
-才分别是 declarators。
-
-因此不要把 C declaration 永远理解成：
+因此：
 
 ```text
-type + variable name
+p
+    ↓
+pointer to int
+
+value
+    ↓
+int
 ```
 
-这个模型只适合最简单情况。
+也就是：
 
-更可靠的长期模型是：
+```c
+int *p, value;
+```
+
+等价于分别写：
+
+```c
+int *p;
+int value;
+```
+
+这个例子非常重要，因为它直接说明：
+
+> **`*` 属于 declarator `*p`，而不是简单属于前面的 `int`。**
+
+这也是为什么 declarator 这个概念不能被简化成“变量名”。
+
+---
+
+### 6.4 一个更容易记住的模型
+
+当前阶段可以先把普通 declaration 看成：
 
 ```text
 declaration specifiers
@@ -656,9 +765,205 @@ declarator
 optional initializer
 ```
 
+例如：
+
+```c
+unsigned int error_count = 0;
+```
+
+拆开：
+
+```text
+unsigned int
+    ↓
+declaration specifiers
+
+error_count
+    ↓
+declarator
+    ↓
+其中的 identifier 也是 error_count
+
+0
+    ↓
+initializer
+```
+
+再例如：
+
+```c
+int *p = 0;
+```
+
+拆开：
+
+```text
+int
+    ↓
+type specifier
+
+*p
+    ↓
+declarator
+
+p
+    ↓
+identifier
+
+0
+    ↓
+initializer
+```
+
+最终：
+
+```text
+p 是一个 pointer-to-int object
+```
+
+> 这里暂时不用学习 pointer 本身，只需要知道 `*p` 整体是 declarator。
+
 ---
 
-### 6.1 一条声明可以包含多个 declarators
+### 6.5 为什么 C 的 declarator 要这样写？
+
+这是理解 declarator 最有帮助的一条思路。
+
+C 的声明语法在很大程度上刻意让 declarator 看起来像以后使用这个 identifier 时的表达式形式。成熟 C 参考资料通常也用这个思路解释 declarator。
+
+例如：
+
+#### Pointer
+
+```c
+int *p;
+```
+
+以后如果：
+
+```c
+*p
+```
+
+那么 `*p` 得到的是一个 `int`。
+
+可以帮助你把声明理解为：
+
+```text
+*p is int
+    ↓
+therefore
+p is pointer to int
+```
+
+#### Array
+
+```c
+int buffer[16];
+```
+
+以后：
+
+```c
+buffer[0]
+```
+
+得到一个 `int`。
+
+所以可以帮助理解为：
+
+```text
+buffer[i] is int
+    ↓
+buffer is array of int
+```
+
+#### Function
+
+```c
+int read_value(void);
+```
+
+以后调用：
+
+```c
+read_value()
+```
+
+得到一个 `int` 返回值。
+
+所以：
+
+```text
+read_value() returns int
+```
+
+这不是完整的复杂声明解析算法，但对理解 C 为什么把 `*`、`[]`、`()` 放在 identifier 周围非常有帮助。
+
+---
+
+### 6.6 当前阶段只需要识别四种形状
+
+先记：
+
+```c
+int value;
+```
+
+```text
+declarator: value
+→ int object
+```
+
+---
+
+```c
+int *p;
+```
+
+```text
+declarator: *p
+→ pointer to int
+```
+
+---
+
+```c
+int values[10];
+```
+
+```text
+declarator: values[10]
+→ array of 10 int
+```
+
+---
+
+```c
+int read_value(void);
+```
+
+```text
+declarator: read_value(void)
+→ function returning int
+```
+
+现在**不需要**学习这种复杂形式：
+
+```c
+int (*handler)(int);
+int (*table[4])(void);
+```
+
+它们会在 pointer、array、function pointer 相关章节中逐步展开。
+
+这一章只需要建立：
+
+> **完整类型不是永远只写在 identifier 左边；declarator 本身也携带类型信息。**
+
+---
+
+### 6.7 一条 declaration 可以有多个 declarators
 
 C 允许：
 
@@ -666,30 +971,121 @@ C 允许：
 int a, b, c;
 ```
 
-也允许：
+它可以理解为：
+
+```text
+共同 declaration specifier:
+    int
+
+declarator 1:
+    a
+
+declarator 2:
+    b
+
+declarator 3:
+    c
+```
+
+同样：
 
 ```c
-int a = 0, b = 1;
+int *p, value;
+```
+
+有：
+
+```text
+共同 specifier:
+    int
+
+declarator:
+    *p
+
+declarator:
+    value
 ```
 
 从语言上完全合法。
 
-不过在学习和嵌入式工程中，当多个 object 的含义或初始化状态不同，本仓库倾向于拆开：
+但在嵌入式工程和学习代码中，如果 declarator 的形状不同，本仓库优先拆开写：
 
 ```c
-int a = 0;
-int b = 1;
+int *p;
+int value;
 ```
 
-这样通常更容易：
+而不是：
 
-- 阅读
-- code review
-- 修改
-- 检查初始化状态
-- 避免复杂 declarator 混在同一 declaration 中
+```c
+int *p, value;
+```
 
-这属于工程可读性建议，不是 C 语言约束。
+这样可以减少把 `value` 误读为 pointer 的风险，也更方便 code review。
+
+---
+
+### 6.8 当前阶段怎么判断 declarator
+
+看到一条简单 declaration 时：
+
+```c
+int *p = 0;
+```
+
+可以按下面顺序：
+
+```text
+1. 先找 declaration specifier
+   int
+
+2. 再找 identifier
+   p
+
+3. 看 identifier 周围还有什么声明语法
+   *p
+
+4. 因此 declarator 是
+   *p
+
+5. specifier + declarator 一起得到完整类型
+   p is pointer to int
+
+6. 最后再看有没有 initializer
+   0
+```
+
+对于现在的学习阶段，这套方法已经足够。
+
+### 6.9 本节只需要记住三句话
+
+```text
+identifier 是名字。
+
+declarator 包含 identifier，
+并可能包含 *, [], () 等类型结构。
+
+declaration specifiers + declarator
+共同决定完整类型。
+```
+
+如果看到：
+
+```c
+int *p, value;
+```
+
+能够准确说出：
+
+```text
+*p     是一个 declarator
+value  是另一个 declarator
+
+p     是 pointer to int
+value 是 int
+```
+
+那么 declarator 这个概念就已经掌握到当前阶段需要的程度。
 
 ---
 
