@@ -24,27 +24,20 @@ Do not add background, motivation, learning objectives, historical context, tuto
 
 Engineering constraints belong next to the concept they constrain. Distinguish specification requirements from engineering conventions.
 
-## 3. Text and Necessary Symbols Only
+## 3. Text, Necessary Symbols, and Minimal Examples
 
-AI-authored knowledge content may contain only:
+AI-authored knowledge content may contain:
 
 - concise factual prose,
 - established terminology,
 - necessary operators, symbols, equations, or notation,
 - compact tables when they reduce repeated prose,
+- minimal examples that materially clarify a core rule or distinction,
 - links and references.
 
-Do not generate:
+Examples must be the smallest set necessary to clarify the concept. Do not add several examples that demonstrate the same rule.
 
-- examples,
-- sample code,
-- worked examples,
-- hypothetical cases,
-- flowcharts,
-- process diagrams,
-- teaching or illustrative diagrams.
-
-Do not use arrows, boxes, indentation, or other notation to simulate a diagram.
+Do not generate flowcharts, process diagrams, teaching diagrams, or illustrative diagrams. Do not use arrows, boxes, indentation, or other notation to simulate a diagram.
 
 ## 4. Use Authoritative Sources
 
@@ -65,11 +58,12 @@ Verbatim wording may be used when the source license, public-domain status, or o
 
 ## 5. Keep the Entry Minimal
 
-Every sentence must materially contribute to at least one of these:
+Every sentence or example must materially contribute to at least one of these:
 
 - defining the primary concept,
 - stating a core rule or relationship,
 - preventing an incorrect interpretation,
+- demonstrating a necessary distinction,
 - stating a necessary engineering constraint,
 - establishing the minimum context required by another rule.
 
@@ -95,4 +89,4 @@ Use only the sections that have necessary content:
 
 Additional headings are allowed only when the concept requires them.
 
-Do not create example-oriented files such as `examples.c` or `exercises.md` unless explicitly requested.
+Do not create separate example-oriented files such as `examples.c` or `exercises.md` unless explicitly requested.
