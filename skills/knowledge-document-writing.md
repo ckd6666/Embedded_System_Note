@@ -32,9 +32,15 @@ Use the simplest wording that preserves the correct technical meaning.
 
 Introduce technical terminology when it improves precision, but explain it before relying on it. Do not replace a clear explanation with specialist vocabulary merely because an authoritative source uses that vocabulary.
 
-Use examples when they materially improve understanding of a rule, distinction, or practical consequence.
+Actively use examples when they make an abstract rule, distinction, or practical consequence easier to understand.
 
-Examples should be small and focused. Multiple examples are acceptable only when each teaches a different necessary point.
+Prefer placing an example close to the concept it explains rather than collecting examples far away from the explanation.
+
+Use as many examples as are useful for learning. Multiple examples are encouraged when they reveal different cases, boundaries, common mistakes, or practical consequences.
+
+Prefer concrete examples over abstract restatement. When useful, include contrasting examples or counterexamples to show why a distinction matters.
+
+Examples should still be relevant to the primary topic and should not become unrelated demonstrations.
 
 Do not add background, history, motivation, or broad theory unless it helps explain the current topic.
 
@@ -100,7 +106,9 @@ Use whichever of these best explains the topic:
 - compact tables,
 - links and references.
 
-Prefer prose for explanation, examples for clarification, and tables for compact comparison.
+Prefer prose for explanation, examples for understanding, and tables for compact comparison.
+
+When a concept is difficult to grasp from prose alone, add an example instead of making the explanation increasingly abstract or terminology-heavy.
 
 Do not generate flowcharts, process diagrams, teaching diagrams, or illustrative diagrams unless explicitly requested.
 
