@@ -34,8 +34,18 @@ Inside each module, concrete knowledge entries use:
 
 ```text
 NNN-name/
-└── README.md
+├── README.md
+├── examples.c
+└── exercises.md
 ```
+
+The default entry template is:
+
+- `README.md` — required. The primary learning and lookup document.
+- `examples.c` — optional. Add when runnable or compiler-observable examples materially improve understanding.
+- `exercises.md` — optional. Add for chapters in the active learning path when deliberate practice is useful.
+
+Do not create optional files merely to satisfy the template. Add them when they serve a clear learning purpose.
 
 Numbering is local to the module. Use the next available number and never renumber existing entries.
 
