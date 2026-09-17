@@ -9,7 +9,7 @@ Use this four-step loop:
 1. **Run** — Get a small, known-good example working on the target hardware.
 2. **Understand** — Identify the program goal, main functional blocks, and the critical path from code to hardware behavior.
 3. **Modify** — Change one main factor, predict the result, run it, and compare the result with the prediction.
-4. **Rebuild** — Reimplement the same small capability with reduced dependence on the original example.
+4. **Rebuild** — Recreate the same small capability from an empty or minimal source file while understanding the essential steps required to make it work.
 
 Do not add extra stages unless required by the current project.
 
@@ -30,6 +30,8 @@ Do not expand into related theory unless the current project requires it.
 Prefer small, observable changes.
 
 Change one main factor at a time when possible. If the result differs from the prediction, investigate that difference before moving on.
+
+During Rebuild, module-level copying, reference lookup, and AI-written code are allowed. Do not copy the complete source file. The learner should be able to identify the essential steps needed to recreate the capability from an empty source file.
 
 If rebuilding fails, use the point of failure to identify the next knowledge gap instead of restarting from the beginning.
 
