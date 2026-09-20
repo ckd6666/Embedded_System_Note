@@ -25,6 +25,8 @@ When an unfamiliar hardware API appears, explain only:
 2. What it does and what its parameters mean.
 3. What hardware step it represents in the current project.
 
+When explaining hardware behavior, separate setup code from the signal flow that happens at runtime. Do not mix them into one sequence.
+
 For board-level wiring, let the learner inspect the schematic first. Explain specific components or connections only when asked.
 
 ## 3. Learn on Demand
