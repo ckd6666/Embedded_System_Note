@@ -19,13 +19,13 @@ Explain code by functional block and program purpose, not line by line by defaul
 
 Inspect individual lines, syntax, APIs, or implementation details only when they are needed to understand the current block or solve a concrete problem.
 
-When an unfamiliar hardware API appears, answer these five questions:
+When an unfamiliar hardware API appears, explain only:
 
-1. Which module or header does it belong to?
-2. What does it do, and what do its parameters mean?
-3. What MCU hardware does it control?
-4. On the current board, how is that hardware actually connected in the schematic?
-5. What step does it perform in the current code-to-hardware path?
+1. Where it comes from.
+2. What it does and what its parameters mean.
+3. What hardware step it represents in the current project.
+
+For board-level wiring, let the learner inspect the schematic first. Explain specific components or connections only when asked.
 
 ## 3. Learn on Demand
 
