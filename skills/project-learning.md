@@ -15,7 +15,9 @@ Do not add extra stages unless the project requires them.
 
 ## 2. Understand From the Code Down
 
-Start from the important code that is actually running.
+At the start, give only a brief overview of what the example does.
+
+Let the learner identify unfamiliar APIs, parameters, or concepts. Explain and trace deeper from those points instead of expanding the whole project in advance.
 
 Trace downward only as far as needed to explain the current behavior:
 
