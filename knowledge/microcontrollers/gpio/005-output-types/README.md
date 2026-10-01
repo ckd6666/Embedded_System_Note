@@ -24,7 +24,7 @@ A push-pull output can actively drive the pin in both directions:
 
 This is the common choice when the microcontroller should directly produce both digital states.
 
-For a normal digital output such as driving an LED control signal or another logic input, push-pull is often the simplest model:
+The basic behavior is:
 
 - output state HIGH -> the output stage drives the pin high;
 - output state LOW -> the output stage drives the pin low.
@@ -40,7 +40,7 @@ An open-drain output actively drives only one direction:
 - LOW is actively driven;
 - HIGH is not actively driven by the output stage.
 
-When the output is released, an external or internal pull-up can bring the line HIGH.
+When the output is released, a pull-up can bring the line HIGH.
 
 The basic behavior is therefore:
 
@@ -55,7 +55,7 @@ I2C commonly uses this style of signaling, but the I2C protocol itself is outsid
 ## 4. Pull Resistors and Open-Drain
 ---
 
-An open-drain output usually needs a pull-up somewhere in the circuit if the line must reach a valid HIGH state.
+An open-drain output normally needs a pull-up somewhere in the circuit if the line must reach a valid HIGH state.
 
 The pull-up may be:
 
@@ -67,21 +67,7 @@ The required resistance depends on the electrical and timing requirements of the
 See [Pull-Up and Pull-Down](../004-pull-up-and-pull-down/README.md).
 
 ---
-## 5. Output Speed
----
-
-Many microcontrollers, including STM32 devices, allow the output speed or slew-rate capability of a GPIO pin to be configured.
-
-This setting controls how quickly the output stage can change the pin voltage.
-
-It does **not** mean that the pin automatically toggles at that frequency.
-
-For example, an STM32 GPIO speed setting associated with a value such as 2 MHz configures the output driver's switching capability. The actual signal frequency is still determined by the software or peripheral generating the output.
-
-Higher output speed is useful when faster edges are required, but it also changes electrical behavior such as edge rate and switching noise.
-
----
-## 6. Output Type and Output State
+## 5. Output Type and Output State
 ---
 
 Output type and output state are separate concepts.
@@ -98,8 +84,10 @@ For push-pull, both LOW and HIGH are actively driven.
 
 For open-drain, LOW is actively driven and HIGH normally depends on a pull-up.
 
+Output speed is another independent GPIO output setting and is introduced in [GPIO Output](../003-gpio-output/README.md).
+
 ---
-## 7. Related Knowledge
+## 6. Related Knowledge
 ---
 
 - [GPIO Fundamentals](../001-gpio-fundamentals/README.md)
@@ -108,7 +96,7 @@ For open-drain, LOW is actively driven and HIGH normally depends on a pull-up.
 - [GPIO Register Model](../007-gpio-register-model/README.md)
 
 ---
-## 8. References
+## 7. References
 ---
 
 - STMicroelectronics, [AN4899 — Guidelines for GPIO hardware settings and low-power consumption on STM32 MCUs](https://www.st.com/resource/en/application_note/an4899-guidelines-for-gpio-hardware-settings-and-lowpower-consumption-on-stm32-mcus-stmicroelectronics.pdf)
