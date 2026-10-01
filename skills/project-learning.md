@@ -2,59 +2,43 @@
 
 Applies to AI-assisted learning through embedded projects.
 
-## 1. Core Learning Loop
+## 1. Core Loop
 
 Use this four-step loop:
 
-1. **Run** — Get a small, known-good example working on the target hardware.
-2. **Understand** — Identify the program goal, main functional blocks, and the critical path from code to hardware behavior.
-3. **Modify** — Change one main factor, predict the result, run it, and compare the result with the prediction.
-4. **Rebuild** — Recreate the same small capability from an empty or minimal source file while understanding the essential steps required to make it work.
+1. **Run** — Get a known-good example working on the target hardware.
+2. **Understand** — Identify the knowledge involved and explain how the project works from software to hardware.
+3. **Modify** — Change one main factor, predict the result, run it, and compare.
+4. **Rebuild** — Recreate the same capability from an empty or minimal source file.
 
-Do not add extra stages unless required by the current project.
+Do not add extra stages unless the project requires them.
 
-## 2. Understand by Functional Blocks
+## 2. Understand the Project
 
-Explain code by functional block and program purpose, not line by line by default.
+Use `knowledge/Embedded-Engineering-Roadmap.png` to identify the knowledge areas involved in the current project.
 
-Inspect individual lines, syntax, APIs, or implementation details only when they are needed to understand the current block or solve a concrete problem.
+Learn the parts needed to explain the project. Do not expand into unrelated parts of the roadmap.
 
-When an unfamiliar hardware API appears, explain only:
+Understanding must go beyond API names. The learner should be able to explain the important path from code to MCU and hardware behavior even if the library API names are hidden.
 
-1. Where it comes from.
-2. What it does and what its parameters mean.
-3. What hardware step it represents in the current project.
+Use the datasheet, reference manual, schematic, and library source when needed.
 
-When explaining hardware behavior, separate setup code from the signal flow that happens at runtime. Do not mix them into one sequence.
+Use `code-explanation.md` when explaining code.
 
-For board-level wiring, let the learner inspect the schematic first. Explain specific components or connections only when asked.
+## 3. Verify and Rebuild
 
-## 3. Learn on Demand
+Prefer small, observable changes and change one main factor at a time when possible.
 
-When a knowledge gap blocks progress, learn the minimum needed to continue, then return to the project.
+Investigate unexpected results before moving on.
 
-Do not expand into related theory unless the current project requires it.
+During Rebuild, reference lookup, module-level copying, and AI-written partial code are allowed. Do not copy the complete source file.
 
-## 4. Verify Through Changes
+## 4. Learn on Demand
 
-Prefer small, observable changes.
-
-Change one main factor at a time when possible. If the result differs from the prediction, investigate that difference before moving on.
-
-During Rebuild, module-level copying, reference lookup, and AI-written code are allowed. Do not copy the complete source file. The learner should be able to identify the essential steps needed to recreate the capability from an empty source file.
-
-If rebuilding fails, use the point of failure to identify the next knowledge gap instead of restarting from the beginning.
+When a missing concept blocks understanding or progress, learn enough of it to continue the project, then return to the project.
 
 ## 5. Repository Boundaries
 
-Project-specific work, experiments, results, and decisions belong under `projects/`.
+Project-specific work belongs under `projects/`.
 
 Reusable knowledge may be distilled into `knowledge/` when it justifies a dedicated entry.
-
-Do not turn every project observation into a knowledge document.
-
-## 6. AI Guidance
-
-Prefer one useful next action over a long plan.
-
-Do not reveal results that the learner can reasonably predict and verify through the project.
