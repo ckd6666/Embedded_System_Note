@@ -4,106 +4,108 @@
 ## 1. Overview
 ---
 
-A microcontroller pin can often serve more than one internal function.
+一个 MCU pin 往往可以承担多种内部功能。
 
-An **alternate function** connects a physical pin to an internal peripheral such as a timer, USART, SPI, or I2C controller instead of using the pin only as ordinary GPIO input or output.
+**Alternate Function（AF）** 表示把物理 pin 连接到某个 MCU peripheral，例如 timer、USART、SPI、I2C，而不是只把它当成普通 GPIO input 或 output 使用。
 
-This is a form of **pin multiplexing**.
+这种机制也叫 **pin multiplexing**。
 
 ---
 ## 2. Why Alternate Functions Exist
 ---
 
-A microcontroller has more internal peripheral signals than can be exposed as dedicated package pins.
+MCU 内部 peripheral signal 的数量往往多于芯片能够提供的专用 package pin 数量。
 
-Pin multiplexing lets one physical pin support several possible internal functions.
+Pin multiplexing 让一个物理 pin 可以在多种内部功能之间复用。
 
-Software selects which function is connected to the pin.
+最终使用哪一种功能，由软件配置决定。
 
-The available choices depend on:
+可选功能取决于：
 
-- the microcontroller model;
-- the specific pin;
-- the package.
+- MCU 型号；
+- 具体 pin；
+- package。
 
-A pin cannot be assumed to support an arbitrary peripheral function.
+因此不能假设任意 pin 都能连接任意 peripheral。
 
 ---
 ## 3. GPIO Mode and Function Selection
 ---
 
-On STM32 devices, using a non-analog peripheral signal on a GPIO pin normally requires two related configurations:
+在 STM32 中，要让某个 GPIO pin 承担 digital peripheral signal，通常需要完成两个相关配置：
 
-1. configure the pin for **alternate-function mode**;
-2. select which alternate function is connected to that pin.
+1. 把 pin 配置成 **alternate-function mode**；
+2. 选择这个 pin 对应的具体 alternate function。
 
-These are separate decisions.
+这两个配置不是一回事。
 
-Alternate-function mode says:
+Alternate-function mode 表示：
 
-> this pin is controlled by a peripheral path rather than ordinary GPIO output logic.
+> 这个 pin 现在由 peripheral path 使用，而不是普通 GPIO output logic。
 
-The alternate-function selection says:
+Alternate-function selection 表示：
 
-> which peripheral signal is connected to the pin.
+> 具体是哪一个 peripheral signal 连接到这个 pin。
 
 ---
 ## 4. Alternate-Function Numbers
 ---
 
-STM32 devices use alternate-function selections such as `AF0`, `AF1`, through device-supported higher values.
+STM32 使用类似 `AF0`、`AF1`、`AF7` 这样的 alternate-function selection。
 
-The meaning of an AF number depends on the pin and the device.
+AF number 的含义取决于具体 device 和 pin。
 
-For example, on STM32F446, `PA2` can use `AF7` for `USART2_TX`.
+例如在 STM32F446 上，`PA2` 可以通过 `AF7` 连接到 `USART2_TX`。
 
-This does **not** mean that AF7 always means USART2_TX on every pin. The datasheet's alternate-function mapping table is the authoritative source for the valid mapping.
+这并不表示 AF7 在所有 pin 上都等于 USART2_TX。
+
+某个 pin 支持哪些 AF 映射，应以 datasheet 中的 alternate-function mapping table 为准。
 
 ---
 ## 5. Signal Direction
 ---
 
-An alternate-function connection may carry:
+Alternate-function connection 可以承载不同方向的 signal：
 
-- a peripheral output toward the pin;
-- a pin input toward the peripheral;
-- a bidirectional peripheral signal.
+- peripheral output 从 MCU 内部传向 pin；
+- pin input 从外部传向 peripheral；
+- bidirectional peripheral signal 双向使用同一个 pin。
 
-For example:
+例如：
 
-- a USART TX signal is driven by the USART peripheral toward the pin;
-- a USART RX signal is received from the pin by the USART peripheral.
+- USART TX：USART peripheral 产生 signal，并通过 pin 向外发送；
+- USART RX：signal 从 pin 进入 USART peripheral。
 
-The physical pin is the same kind of package pin, but the selected internal path changes which hardware controls or observes it.
+物理 pin 本身没有变，改变的是 MCU 内部哪个 hardware path 与它连接。
 
 ---
 ## 6. Electrical Configuration Still Matters
 ---
 
-Selecting an alternate function does not remove the GPIO electrical configuration.
+选择 alternate function 后，GPIO 的 electrical configuration 仍然可能需要设置。
 
-Depending on the peripheral and device, software may still configure:
+根据具体 peripheral 和 MCU，常见相关设置包括：
 
-- push-pull or open-drain output type;
-- pull-up or pull-down;
-- output speed.
+- push-pull / open-drain output type；
+- pull-up / pull-down；
+- output speed。
 
-These settings must match the electrical behavior required by the peripheral signal.
+这些配置必须符合对应 peripheral signal 的电气要求。
 
-See [Output Types](../005-output-types/README.md) and [Pull-Up and Pull-Down](../004-pull-up-and-pull-down/README.md).
+见 [Output Types](../005-output-types/README.md) 和 [Pull-Up and Pull-Down](../004-pull-up-and-pull-down/README.md)。
 
 ---
 ## 7. Example: USART2 TX on PA2
 ---
 
-For an STM32F446 USART2 transmit signal on PA2, the relevant configuration is conceptually:
+以 STM32F446 的 `PA2` 输出 `USART2_TX` 为例，概念上的配置过程是：
 
-1. choose PA2;
-2. put PA2 into alternate-function mode;
-3. select the AF mapping that connects PA2 to USART2_TX;
-4. configure the USART peripheral.
+1. 选择 PA2；
+2. 把 PA2 配置成 alternate-function mode；
+3. 选择把 PA2 连接到 USART2_TX 的 AF mapping；
+4. 配置 USART peripheral。
 
-After that, the USART peripheral produces the TX signal and the GPIO alternate-function routing connects that signal to PA2.
+完成后，USART peripheral 负责产生 TX signal，GPIO alternate-function routing 再把这个 signal 接到 PA2。
 
 ---
 ## 8. Related Knowledge
