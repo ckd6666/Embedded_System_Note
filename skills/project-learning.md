@@ -9,7 +9,7 @@ Use a small working example and organize learning around this cycle:
 1. **Run** — Run the example on the target hardware and observe what actually happens.
 2. **Investigate** — Explain the few software and hardware mechanisms that are necessary to explain that behavior.
 3. **Modify** — Change one meaningful factor, run it, and compare the observed behavior.
-4. **Make** — Recreate or extend the capability with less guidance.
+4. **Make** — Recreate or extend the capability.
 
 The cycle is a learning structure, not an automatic progression.
 
@@ -21,8 +21,7 @@ AI may:
 
 - provide evidence of current understanding,
 - point out missing or incorrect mechanisms,
-- recommend a next activity,
-- suggest more or less guidance.
+- recommend a next activity.
 
 AI must not decide on the learner's behalf that a stage, topic, capability, or project is complete or that it is time to move on.
 
@@ -95,19 +94,7 @@ When possible, use:
 
 Investigate unexpected results and present what they imply. The learner decides whether to continue, repeat, or move elsewhere.
 
-## 7. Reduce Guidance Over Time
-
-When the learner starts a new concept, a clear worked example and explicit guidance may be useful.
-
-As the learner becomes more independent, AI may recommend reducing support:
-
-`worked example -> guided modification -> partial reconstruction -> independent make`
-
-During Make, the learner may consult documentation, previous examples, and small known patterns, but should not copy the complete solution.
-
-AI may present evidence that the learner can explain the software-to-hardware path or recreate and adapt the capability with less help. The learner decides whether that is sufficient.
-
-## 8. Keep Projects Manageable
+## 7. Keep Projects Manageable
 
 A small project should focus on one primary observable behavior and only a few new mechanisms.
 
