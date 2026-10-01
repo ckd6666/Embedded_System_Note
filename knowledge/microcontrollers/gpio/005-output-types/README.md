@@ -4,87 +4,89 @@
 ## 1. Overview
 ---
 
-When a GPIO pin is used as an output, its **output type** defines how the pin's driver produces LOW and HIGH electrical states.
+GPIO pin 作为 output 时，**output type** 决定 output driver 用什么电气方式产生 LOW 和 HIGH。
 
-Two common output types are:
+常见的两种 output type 是：
 
-- **push-pull**;
-- **open-drain**.
+- **push-pull**；
+- **open-drain**。
 
-Output type is different from output mode. Output mode says that the pin is being used as a GPIO output; output type defines how the electrical driver behaves.
+Output type 和 output mode 不是同一个概念。
+
+Output mode 表示这个 pin 当前用作 GPIO output；output type 则决定 output driver 具体怎样产生电平。
 
 ---
 ## 2. Push-Pull Output
 ---
 
-A push-pull output can actively drive the pin in both directions:
+Push-pull output 可以主动向两个方向驱动 pin：
 
-- drive toward HIGH;
-- drive toward LOW.
+- 主动驱动到 HIGH；
+- 主动驱动到 LOW。
 
-This is the common choice when the microcontroller should directly produce both digital states.
+当 MCU 需要直接产生两个数字状态时，push-pull 是最常见的方式。
 
-The basic behavior is:
+基本行为是：
 
-- output state HIGH -> the output stage drives the pin high;
-- output state LOW -> the output stage drives the pin low.
+- output state = HIGH → output stage 主动把 pin 拉高；
+- output state = LOW → output stage 主动把 pin 拉低。
 
-The exact output voltage depends on the device supply, load current, and electrical characteristics.
+实际输出电压仍然取决于 supply、load current 和器件 electrical characteristics。
 
 ---
 ## 3. Open-Drain Output
 ---
 
-An open-drain output actively drives only one direction:
+Open-drain output 只主动驱动一个方向：
 
-- LOW is actively driven;
-- HIGH is not actively driven by the output stage.
+- LOW：主动驱动；
+- HIGH：output stage 不主动驱动。
 
-When the output is released, a pull-up can bring the line HIGH.
+当 output 被释放时，需要 pull-up 把 signal 拉到 HIGH。
 
-The basic behavior is therefore:
+基本行为是：
 
-- output active -> pin pulled LOW;
-- output released -> pull-up determines the HIGH level.
+- output active → pin 被拉到 LOW；
+- output released → HIGH 由 pull-up 决定。
 
-Open-drain outputs are useful when multiple devices must share one signal without each device actively driving the line HIGH.
+Open-drain 很适合多个 device 共享一条 signal，因为各 device 都不会主动把 line 驱动到 HIGH。
 
-I2C commonly uses this style of signaling, but the I2C protocol itself is outside the scope of this chapter.
+I2C 常使用这种 signaling，但 I2C protocol 本身不属于本章范围。
 
 ---
 ## 4. Pull Resistors and Open-Drain
 ---
 
-An open-drain output normally needs a pull-up somewhere in the circuit if the line must reach a valid HIGH state.
+如果 open-drain line 需要得到有效 HIGH，通常必须在电路中的某处存在 pull-up。
 
-The pull-up may be:
+Pull-up 可以来自：
 
-- internal to the microcontroller;
-- external on the board.
+- MCU internal pull-up；
+- board 上的 external pull-up。
 
-The required resistance depends on the electrical and timing requirements of the circuit.
+需要多大的 resistance，取决于具体电路的 electrical 和 timing 要求。
 
-See [Pull-Up and Pull-Down](../004-pull-up-and-pull-down/README.md).
+见 [Pull-Up and Pull-Down](../004-pull-up-and-pull-down/README.md)。
 
 ---
 ## 5. Output Type and Output State
 ---
 
-Output type and output state are separate concepts.
+Output type 和 output state 是两个独立概念。
 
-The output state answers:
+Output state 回答：
 
-> Should the GPIO currently represent LOW or HIGH?
+> 当前 GPIO 希望表示 LOW 还是 HIGH？
 
-The output type answers:
+Output type 回答：
 
-> How should the output driver electrically produce that state?
+> Output driver 应该怎样用电气方式实现这个状态？
 
-For push-pull, both LOW and HIGH are actively driven.
+对于 push-pull，LOW 和 HIGH 都由 output stage 主动驱动。
 
-For open-drain, LOW is actively driven and HIGH normally depends on a pull-up.
+对于 open-drain，LOW 主动驱动，而 HIGH 通常依赖 pull-up。
 
-Output speed is another independent GPIO output setting and is introduced in [GPIO Output](../003-gpio-output/README.md).
+Output speed 是另一个独立的 GPIO output 设置，见 [GPIO Output](../003-gpio-output/README.md)。
 
 ---
 ## 6. Related Knowledge
