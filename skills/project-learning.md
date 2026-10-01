@@ -6,13 +6,10 @@ Applies to AI-assisted learning through embedded-system projects.
 
 Use a small working example and organize learning around this cycle:
 
-1. **Predict** — When the learner has enough context, predict the important observable behavior.
-2. **Run** — Run the example on the target hardware and observe what actually happens.
-3. **Investigate** — Explain the few software and hardware mechanisms that are necessary to explain that behavior.
-4. **Modify** — Change one meaningful factor, predict the result, run it, and compare.
-5. **Make** — Recreate or extend the capability with less guidance.
-
-If the learner does not yet have enough knowledge to make a useful prediction, Run may come before Predict.
+1. **Run** — Run the example on the target hardware and observe what actually happens.
+2. **Investigate** — Explain the few software and hardware mechanisms that are necessary to explain that behavior.
+3. **Modify** — Change one meaningful factor, run it, and compare the observed behavior.
+4. **Make** — Recreate or extend the capability with less guidance.
 
 The cycle is a learning structure, not an automatic progression.
 
@@ -29,7 +26,7 @@ AI may:
 
 AI must not decide on the learner's behalf that a stage, topic, capability, or project is complete or that it is time to move on.
 
-Evidence such as explanation, prediction, debugging, measurement, and reconstruction may be used to inform the learner's decision, not replace it.
+Evidence such as explanation, debugging, measurement, and reconstruction may be used to inform the learner's decision, not replace it.
 
 ## 3. Investigate by Functional Subgoals
 
@@ -94,7 +91,7 @@ Use instruments only when they add useful evidence.
 
 When possible, use:
 
-`prediction -> observation/measurement -> explanation`
+`change -> observation/measurement -> explanation`
 
 Investigate unexpected results and present what they imply. The learner decides whether to continue, repeat, or move elsewhere.
 
@@ -108,7 +105,7 @@ As the learner becomes more independent, AI may recommend reducing support:
 
 During Make, the learner may consult documentation, previous examples, and small known patterns, but should not copy the complete solution.
 
-AI may present evidence that the learner can explain the software-to-hardware path, predict meaningful changes, or recreate and adapt the capability with less help. The learner decides whether that is sufficient.
+AI may present evidence that the learner can explain the software-to-hardware path or recreate and adapt the capability with less help. The learner decides whether that is sufficient.
 
 ## 8. Keep Projects Manageable
 
