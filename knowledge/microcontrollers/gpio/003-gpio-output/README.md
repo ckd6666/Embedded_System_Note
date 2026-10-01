@@ -23,7 +23,7 @@ A digital GPIO output normally has two logical states:
 
 On STM32 devices, the intended output state is stored by the GPIO peripheral. The output circuitry then drives the corresponding pin according to that state and the configured output type.
 
-The exact output voltage that satisfies LOW or HIGH depends on supply voltage, output load, and device electrical characteristics.
+The resulting voltage depends on supply voltage, load current, and device electrical characteristics.
 
 ---
 ## 3. Setting, Clearing, and Toggling
@@ -40,33 +40,35 @@ Toggling is not a special electrical mode. It is a software operation that chang
 On STM32 devices, output state is associated with registers such as `GPIOx_ODR` and `GPIOx_BSRR`. Their details are covered in [GPIO Register Model](../007-gpio-register-model/README.md).
 
 ---
-## 4. Output Mode Is Not Enough by Itself
+## 4. Output Electrical Configuration
 ---
 
-Configuring a pin as output selects the GPIO output path, but the electrical behavior also depends on output configuration.
+Configuring a pin as output selects the GPIO output path, but the electrical behavior also depends on additional settings.
 
-Important output properties include:
+Important properties include:
 
 - **push-pull or open-drain output type**;
-- **output speed / slew-rate setting**;
-- optional **pull-up or pull-down** configuration.
+- optional **pull-up or pull-down**;
+- **output speed / slew-rate capability**.
 
-These are covered in [Output Types](../005-output-types/README.md) and [Pull-Up and Pull-Down](../004-pull-up-and-pull-down/README.md).
+Output speed controls how quickly the output driver can change the pin voltage. It does not make the pin toggle by itself and is not the same as the signal frequency produced by software or another peripheral.
+
+See [Output Types](../005-output-types/README.md) and [Pull-Up and Pull-Down](../004-pull-up-and-pull-down/README.md).
 
 ---
 ## 5. Output State and Physical Load
 ---
 
-The GPIO pin does not exist in isolation. It drives an external electrical load such as:
+A GPIO pin drives an external electrical load such as:
 
 - an LED circuit;
 - another digital input;
 - an enable pin;
 - a transistor or logic gate.
 
-Changing the software output state only guarantees the intended GPIO drive behavior. The resulting voltage and current must still satisfy the electrical requirements of the connected circuit.
+Changing the software output state sets the intended GPIO drive state. The actual pin voltage and current also depend on the connected circuit and the device's electrical limits.
 
-For example, an LED turns on only if the GPIO state and the surrounding circuit create sufficient current through the LED.
+For example, an LED turns on only if the GPIO state and surrounding circuit produce current through the LED.
 
 ---
 ## 6. Example
@@ -80,7 +82,7 @@ If software changes the output state from LOW to HIGH:
 2. the output driver changes the pin's electrical level;
 3. the external LED circuit responds to that new level.
 
-The visible LED behavior comes from the whole software-to-circuit path, not from the C function name itself.
+The visible LED behavior comes from the complete software-to-circuit path.
 
 ---
 ## 7. Related Knowledge
