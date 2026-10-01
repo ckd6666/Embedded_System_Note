@@ -4,72 +4,72 @@
 ## 1. Overview
 ---
 
-GPIO input mode lets software observe a digital signal present on a microcontroller pin.
+GPIO input mode 让软件能够读取 MCU pin 上的数字信号。
 
-The essential path is:
+基本路径是：
 
 `external voltage -> pin -> GPIO input circuitry -> input state -> software read`
 
-In normal input mode, the GPIO output driver does not actively drive the pin HIGH or LOW. An optional pull-up or pull-down may still weakly bias the pin.
+当 pin 被配置为普通 digital input 时，GPIO output driver 不会主动把 pin 驱动成 HIGH 或 LOW；如果启用了 pull-up 或 pull-down，它们仍然可以对 pin 提供较弱的偏置。
 
 ---
 ## 2. Input Path
 ---
 
-When a pin is configured as a digital input, its input buffer observes the pin voltage and converts it into a logical LOW or HIGH state.
+当 pin 配置为 digital input 后，input buffer 会观察 pin 上的电压，并把它解释成逻辑 LOW 或 HIGH。
 
-Software then reads that state through the GPIO peripheral.
+软件再通过 GPIO peripheral 读取这个数字状态。
 
-On STM32 devices, the current digital input state is exposed through the GPIO input data register, commonly named `GPIOx_IDR`.
+在 STM32 中，当前 digital input state 通常通过 `GPIOx_IDR`（Input Data Register）提供给软件。
 
-The exact electrical voltage thresholds for LOW and HIGH are device-specific and are defined in the datasheet.
+LOW / HIGH 对应的具体电压阈值由器件决定，需要查 datasheet。
 
 ---
 ## 3. Reading an Input
 ---
 
-Reading a GPIO input means reading the state produced by the input path.
+读取 GPIO input，本质上是在读取 GPIO input path 已经得到的数字状态。
 
-For example, if an external button circuit makes a pin electrically LOW, software reading that pin receives a logical 0. If the circuit makes the pin HIGH, software receives a logical 1.
+例如，一个外部按钮电路让 pin 处于 LOW 时，软件读取到逻辑 0；当 pin 处于 HIGH 时，软件读取到逻辑 1。
 
-The software-visible state follows the electrical state of the pin; it is not created by the read operation itself.
+读取操作本身不会制造这个状态。状态首先来自 pin 上的实际电气电平，然后由 GPIO input circuitry 转换成软件可以读取的数字值。
 
 ---
 ## 4. Floating Inputs
 ---
 
-An input pin needs a defined electrical level.
+Input pin 需要有明确的电气状态。
 
-If nothing actively drives the pin and no pull resistor holds it at a known level, the pin can be **floating**. A floating pin may be interpreted unpredictably because small leakage currents, noise, or nearby signals can move its voltage.
+如果没有任何电路主动驱动 pin，同时也没有 pull resistor 把它保持在某个已知电平，那么这个 pin 就处于 **floating** 状态。
 
-Pull-up and pull-down resistors provide a default state when no stronger external source is driving the pin.
+Floating input 的电压可能受到 leakage current、electrical noise 或附近信号的影响，从而在 HIGH 和 LOW 之间不稳定变化。
 
-See [Pull-Up and Pull-Down](../004-pull-up-and-pull-down/README.md).
+Pull-up 和 pull-down resistor 的作用，就是在没有更强外部驱动时，为 pin 提供默认状态。
+
+见 [Pull-Up and Pull-Down](../004-pull-up-and-pull-down/README.md)。
 
 ---
 ## 5. Input Mode and Other Pin Functions
 ---
 
-Configuring a pin as GPIO input means the GPIO input path is the intended digital function.
+把 pin 配置成 GPIO input，表示当前主要使用 GPIO 的 digital input path。
 
-If the pin is instead assigned to an alternate function, another peripheral may use the same physical pin as its input.
+如果 pin 被配置成 alternate function，则可能由其他 peripheral 使用同一个物理 pin 作为输入。
 
-If the pin is configured for analog use, the digital input path may be disabled or bypassed depending on the device.
+如果 pin 被配置成 analog mode，则数字 input path 可能被关闭或绕过，具体行为取决于 MCU。
 
-These modes are configured explicitly because one physical pin can support several possible functions.
+同一个物理 pin 可以支持多种内部功能，因此必须通过配置明确选择当前用途。
 
 ---
 ## 6. Example
 ---
 
-Suppose a button circuit connects a pin to ground when pressed and otherwise holds it HIGH with a pull-up resistor.
+假设一个按钮电路使用 pull-up resistor，并在按下时把 pin 接到 ground：
 
-The GPIO input behavior is:
+- 按钮松开：pull-up 把 pin 保持在 HIGH，软件读取 1；
+- 按钮按下：pin 被拉到 LOW，软件读取 0。
 
-- button released: pin is HIGH, software reads 1;
-- button pressed: pin is LOW, software reads 0.
-
-The GPIO peripheral is only reporting the digital level present at the pin.
+GPIO peripheral 在这里负责报告 pin 当前的数字电平。
 
 ---
 ## 7. Related Knowledge
