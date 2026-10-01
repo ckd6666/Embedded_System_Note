@@ -4,85 +4,85 @@
 ## 1. Overview
 ---
 
-GPIO output mode lets the microcontroller drive a digital state onto a pin.
+GPIO output mode 让 MCU 能够主动把数字状态输出到 pin。
 
-The essential path is:
+基本路径是：
 
 `software output state -> GPIO output logic -> pin driver -> pin voltage`
 
-Software changes the GPIO output state; the GPIO peripheral turns that state into electrical behavior at the pin.
+软件改变 GPIO peripheral 中的 output state，GPIO peripheral 再通过 output driver 把这个状态体现为 pin 上的实际电压。
 
 ---
 ## 2. Output State
 ---
 
-A digital GPIO output normally has two logical states:
+Digital GPIO output 通常有两个逻辑状态：
 
-- **LOW** — logic 0.
-- **HIGH** — logic 1.
+- **LOW** — logic 0；
+- **HIGH** — logic 1。
 
-On STM32 devices, the intended output state is stored by the GPIO peripheral. The output circuitry then drives the corresponding pin according to that state and the configured output type.
+在 STM32 中，GPIO peripheral 会保存希望输出的状态，随后 output circuitry 根据这个状态和当前 output type 驱动对应 pin。
 
-The resulting voltage depends on supply voltage, load current, and device electrical characteristics.
+实际输出电压还会受到 supply voltage、load current 和器件 electrical characteristics 的影响。
 
 ---
 ## 3. Setting, Clearing, and Toggling
 ---
 
-Common GPIO output operations are:
+常见的 GPIO output 操作包括：
 
-- **set** — make the output state HIGH;
-- **clear/reset** — make the output state LOW;
-- **toggle** — change HIGH to LOW or LOW to HIGH.
+- **set** — 把 output state 设为 HIGH；
+- **clear/reset** — 把 output state 设为 LOW；
+- **toggle** — 把 HIGH 改成 LOW，或把 LOW 改成 HIGH。
 
-Toggling is not a special electrical mode. It is a software operation that changes the stored output state to the opposite value.
+Toggle 不是一种特殊电气模式，它只是软件把当前 output state 改成相反状态。
 
-On STM32 devices, output state is associated with registers such as `GPIOx_ODR` and `GPIOx_BSRR`. Their details are covered in [GPIO Register Model](../007-gpio-register-model/README.md).
+在 STM32 中，output state 与 `GPIOx_ODR`、`GPIOx_BSRR` 等 registers 有关。具体 register model 见 [GPIO Register Model](../007-gpio-register-model/README.md)。
 
 ---
 ## 4. Output Electrical Configuration
 ---
 
-Configuring a pin as output selects the GPIO output path, but the electrical behavior also depends on additional settings.
+把 pin 配置成 output，只是选择了 GPIO output path。
 
-Important properties include:
+Pin 的实际电气行为还受到其他配置影响，例如：
 
-- **push-pull or open-drain output type**;
-- optional **pull-up or pull-down**;
-- **output speed / slew-rate capability**.
+- **push-pull / open-drain output type**；
+- optional **pull-up / pull-down**；
+- **output speed / slew-rate capability**。
 
-Output speed controls how quickly the output driver can change the pin voltage. It does not make the pin toggle by itself and is not the same as the signal frequency produced by software or another peripheral.
+Output speed 控制 output driver 改变 pin 电压的速度能力。它不会让 pin 自动以某个频率切换，也不等于软件或 peripheral 实际产生的 signal frequency。
 
-See [Output Types](../005-output-types/README.md) and [Pull-Up and Pull-Down](../004-pull-up-and-pull-down/README.md).
+见 [Output Types](../005-output-types/README.md) 和 [Pull-Up and Pull-Down](../004-pull-up-and-pull-down/README.md)。
 
 ---
 ## 5. Output State and Physical Load
 ---
 
-A GPIO pin drives an external electrical load such as:
+GPIO pin 最终会连接到某个外部 electrical load，例如：
 
-- an LED circuit;
-- another digital input;
-- an enable pin;
-- a transistor or logic gate.
+- LED circuit；
+- 另一个 digital input；
+- enable pin；
+- transistor 或 logic gate。
 
-Changing the software output state sets the intended GPIO drive state. The actual pin voltage and current also depend on the connected circuit and the device's electrical limits.
+软件改变 output state，只是确定 GPIO 希望怎样驱动 pin。最终 pin 上的实际电压和电流，还取决于连接的电路以及 MCU 的 electrical limits。
 
-For example, an LED turns on only if the GPIO state and surrounding circuit produce current through the LED.
+例如，LED 是否点亮取决于 GPIO state 和外围电路是否形成了足够的 LED current。
 
 ---
 ## 6. Example
 ---
 
-Suppose a GPIO pin is configured as a push-pull output and connected through a resistor to an LED circuit.
+假设一个 GPIO pin 被配置成 push-pull output，并通过 resistor 连接到 LED circuit。
 
-If software changes the output state from LOW to HIGH:
+软件把 output state 从 LOW 改成 HIGH 时：
 
-1. the GPIO peripheral stores the new output state;
-2. the output driver changes the pin's electrical level;
-3. the external LED circuit responds to that new level.
+1. GPIO peripheral 保存新的 output state；
+2. output driver 改变 pin 的电气电平；
+3. 外部 LED circuit 对新的电平作出响应。
 
-The visible LED behavior comes from the complete software-to-circuit path.
+因此 LED 的可见变化来自完整的软件到电路路径，而不是某个 C function name 本身。
 
 ---
 ## 7. Related Knowledge
