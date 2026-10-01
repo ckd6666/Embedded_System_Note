@@ -49,6 +49,8 @@ Build the explanation in a useful learning order rather than mirroring the struc
 
 Use the simplest wording that preserves the correct technical meaning.
 
+Knowledge documents should use Chinese as the main explanatory language. Keep standard English technical terms, API names, register names, identifiers, code, and established abbreviations in their original form when that preserves precision; explain them in Chinese instead of force-translating them.
+
 Introduce technical terminology when it improves precision, but explain it before relying on it.
 
 Do not replace a clear explanation with specialist vocabulary merely because an authoritative source uses that vocabulary.
