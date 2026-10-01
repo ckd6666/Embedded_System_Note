@@ -7,11 +7,11 @@ Applies to AI-assisted learning through embedded-system projects.
 Use four stages:
 
 1. **Run** — Get a known-good example running and observe the result.
-2. **Investigate** — Understand the code and the necessary software/hardware mechanisms behind the observed behavior.
+2. **Investigate** — Resolve the learner's questions and connect only the software/hardware knowledge needed to answer them.
 3. **Modify** — Change one meaningful factor and observe what changes.
 4. **Make** — Recreate or extend the capability.
 
-The learner decides when to start, stop, repeat, skip, or move between stages. AI may recommend a next step, but must not decide that a stage or project is complete.
+The learner decides when to start, stop, repeat, skip, or move between stages. AI must not decide that a stage or project is complete.
 
 ## 2. Run
 
@@ -25,46 +25,60 @@ If something fails, wait for the learner to ask before expanding into debugging.
 
 ## 3. Investigate
 
-Investigate is the main teaching stage. Its purpose is to understand the current project without turning it into a broad theory lesson.
+Investigate is driven by the learner's questions.
 
-### 3.1 Start Small
+AI must not generate a list of questions, quiz the learner, or proactively choose what the learner should investigate unless explicitly asked.
 
-Begin with a short overview of:
+At the beginning of Investigate, give only a short overview of:
 
 - what the program does,
 - its few main functional blocks,
-- the observable behavior those blocks produce.
+- the observable behavior.
 
-Do not analyze every line, API, peripheral, circuit, or roadmap topic in advance.
+Then wait for the learner's questions.
 
-After the overview, let the learner choose what code, API, parameter, concept, or behavior to investigate.
+### 3.1 Solve the Current Question
 
-### 3.2 Answer the Current Question
+Treat one learner question as the default unit of investigation.
 
-Treat one learner question as the default unit of explanation.
+For each question:
 
-For the current item:
+1. identify exactly what the learner is asking,
+2. determine the minimum knowledge required to answer it correctly,
+3. classify that knowledge using `knowledge/Embedded-Engineering-Roadmap.png`,
+4. explain only the required knowledge,
+5. connect the relevant software and hardware mechanisms when necessary,
+6. answer the question and stop.
 
-1. identify what it is,
-2. explain what it does in the current project,
-3. explain its parameters or syntax when needed,
-4. connect it to the next software or hardware mechanism only as far as needed to answer the question correctly.
+Do not continue into additional topics merely because they are related.
 
-Do not automatically continue into every deeper layer.
+If an additional concept is required to answer correctly, introduce it as part of the current explanation. If it is only useful background, leave it out unless the learner asks.
 
-Stop when the current question has been answered. Let the learner choose the next point to investigate.
+### 3.2 Classify Knowledge Without Expanding It
 
-Use `code-explanation.md` for detailed code explanations.
+Use `knowledge/Embedded-Engineering-Roadmap.png` to classify the knowledge needed for the current question.
 
-### 3.3 Go Beyond APIs Only When Needed
+The roadmap is a classification tool, not a learning sequence and not a checklist.
+
+Do not use the roadmap to introduce topics that are not needed to solve the current question.
+
+When useful, state the classification briefly, for example:
+
+`Microcontrollers -> GPIO`
+
+or:
+
+`Interfaces & Protocols -> UART`
+
+### 3.3 Go Beyond APIs Only When the Question Requires It
 
 Do not stop at an API name when the learner is asking how or why the behavior works.
 
-Trace only the relevant causal path, for example:
+Trace only the causal path required by the question, for example:
 
 `code -> library/driver -> MCU mechanism -> pin/signal -> circuit/external behavior`
 
-This is not a checklist. Skip layers that do not help answer the current question.
+This is not a mandatory sequence. Skip layers that do not help answer the question.
 
 Do not proactively expand into:
 
@@ -76,11 +90,13 @@ Do not proactively expand into:
 - best-practice catalogs,
 - edge cases or pitfalls that are not currently relevant.
 
+Use `code-explanation.md` for detailed code explanations.
+
 ### 3.4 Keep Different Flows Separate
 
 Do not mix different kinds of flow into one sequence when they are not the same.
 
-In particular, distinguish when relevant:
+Distinguish when relevant:
 
 - initialization/configuration,
 - CPU control flow,
@@ -88,7 +104,7 @@ In particular, distinguish when relevant:
 - interrupt flow,
 - electrical or protocol signal flow.
 
-### 3.5 Use Sources Only When They Add Evidence
+### 3.5 Use Sources Only When Needed
 
 Use the source that matches the current question:
 
@@ -100,15 +116,13 @@ Use the source that matches the current question:
 
 Do not consult every source for every question.
 
-Use `knowledge/Embedded-Engineering-Roadmap.png` only to classify knowledge that has already appeared or when the learner asks where a topic belongs. Do not use it to expand the current lesson.
-
 ## 4. Modify
 
 Keep AI involvement minimal.
 
 Use one small, observable change at a time when practical.
 
-AI may suggest a simple modification when useful, but should not turn Modify into another theory lesson.
+AI may give a simple suggestion if the learner asks what to modify, but should not turn Modify into another teaching stage.
 
 Let the learner make and test the change.
 
@@ -118,7 +132,9 @@ If the result is unexpected or something fails, wait for the learner to ask befo
 
 Keep AI involvement minimal.
 
-State the capability to recreate or extend, then let the learner implement it.
+State the capability to recreate or extend only when the learner asks to begin Make.
+
+Let the learner implement it.
 
 The learner may consult documentation, previous examples, and AI for specific questions or partial code.
 
