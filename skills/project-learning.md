@@ -70,25 +70,38 @@ or:
 
 `Interfaces & Protocols -> UART`
 
-### 3.3 Go Beyond APIs Only When the Question Requires It
+### 3.3 Bridge Code to Hardware at the Interface
 
-Do not stop at an API name when the learner is asking how or why the behavior works.
+When the learner asks about code that interacts with hardware, identify the hardware/software interface and explain the minimum bridge needed to answer the question.
 
-Trace only the causal path required by the question, for example:
+Typical interface points include:
 
-`code -> library/driver -> MCU mechanism -> pin/signal -> circuit/external behavior`
+- peripheral APIs,
+- peripheral clocks,
+- GPIO modes and alternate functions,
+- timers, UART, SPI, I2C, ADC, DAC, DMA,
+- interrupts and ISR-related code,
+- hardware registers,
+- pins and electrical signals.
 
-This is not a mandatory sequence. Skip layers that do not help answer the question.
+Use this bridge as needed:
 
-Do not proactively expand into:
+1. **Software intent** — what the current code asks the system to configure, read, write, start, or stop.
+2. **Software-visible hardware interface** — what MCU state the software actually changes or observes. On a microcontroller this is often a memory-mapped peripheral register; for some mechanisms it may be CPU/core or exception state.
+3. **Peripheral behavior** — what the MCU hardware does because of that state.
+4. **Physical effect** — the relevant pin, signal, protocol, board circuit, or external-device behavior.
 
-- complete peripheral architecture,
-- full register lists,
-- complete protocol specifications,
-- unrelated electronics theory,
-- alternative designs,
-- best-practice catalogs,
-- edge cases or pitfalls that are not currently relevant.
+This bridge is not a checklist. Stop at the first depth that fully answers the learner's question.
+
+Do not force a hardware explanation for ordinary C syntax or algorithm questions.
+
+Do not jump directly from an API name to a board-level result when the missing understanding is the MCU mechanism in between.
+
+Do not descend into transistor-level or full peripheral internals unless the learner's question requires it.
+
+A common conceptual bridge is:
+
+`C / library call -> memory-mapped register or hardware state -> peripheral logic -> observable signal or behavior`
 
 Use `code-explanation.md` for detailed code explanations.
 
@@ -106,15 +119,17 @@ Distinguish when relevant:
 
 ### 3.5 Use Sources Only When Needed
 
-Use the source that matches the current question:
+Use the source that matches the current question and the layer being traced:
 
-- **library source** — what an API does,
-- **MCU reference manual** — peripheral/register behavior,
+- **library source** — how a library/API reaches the hardware interface,
+- **MCU reference manual** — registers and peripheral behavior,
 - **MCU datasheet** — pins, alternate functions, electrical facts,
 - **board schematic/manual** — physical board connections,
 - **official device/protocol documentation** — external devices and interfaces.
 
 Do not consult every source for every question.
+
+Use a deeper source only when it is needed to establish a fact or complete the current bridge.
 
 ## 4. Modify
 
