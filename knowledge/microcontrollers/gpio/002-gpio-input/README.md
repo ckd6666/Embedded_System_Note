@@ -10,7 +10,7 @@ The essential path is:
 
 `external voltage -> pin -> GPIO input circuitry -> input state -> software read`
 
-The pin does not actively drive the external circuit while it is being used as a normal digital input.
+In normal input mode, the GPIO output driver does not actively drive the pin HIGH or LOW. An optional pull-up or pull-down may still weakly bias the pin.
 
 ---
 ## 2. Input Path
