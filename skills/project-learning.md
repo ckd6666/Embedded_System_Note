@@ -1,353 +1,420 @@
 # Project Learning Rules
 
-Applies to AI-assisted learning through embedded projects.
+Applies to AI-assisted learning through embedded-system projects.
 
-## 1. Purpose
+## 1. Instructional Basis
 
-Use working embedded projects to learn software and hardware as one connected system.
+Use established learning methods rather than inventing a project workflow from scratch.
 
-The goal is not only to understand the C code or memorize library APIs. The learner should gradually understand how software causes observable behavior through the MCU, peripherals, pins, signals, board circuitry, and external devices.
+The default approach combines:
 
-Do not turn the project into a sequence of isolated theory lessons. Keep new knowledge connected to the behavior being built or observed.
+- **PRIMM** — Predict, Run, Investigate, Modify, Make.
+- **Worked examples** — novices begin from a correct, working example before solving the same class of problem independently.
+- **Subgoal-oriented explanation** — group code and hardware behavior by meaningful functional steps rather than by individual lines.
+- **Cognitive apprenticeship** — model expert reasoning, coach the learner during practice, provide scaffolding, and gradually fade that support.
+- **Scaffolded project-based learning** — move from structured labs to increasingly independent hardware/software integration.
+- **Measurement-based verification** — connect predictions and explanations to observable hardware behavior.
 
-## 2. Core Learning Loop
+Do not preserve a learning habit merely because it was used earlier. Prefer the method that best supports durable understanding and independent performance.
 
-Use this four-step loop:
+## 2. Core Learning Cycle
 
-1. **Run** — Get a known-good example working on the target hardware and observe what it actually does.
-2. **Understand** — Investigate how the important software and hardware parts cooperate to produce that behavior.
-3. **Modify** — Predict the effect of one meaningful change, make the change, run it, and compare the result with the prediction.
-4. **Rebuild** — Recreate the same capability from an empty or minimal source file with less guidance.
+For each small project or lab, use this cycle:
 
-Do not add stages unless the project requires them.
+1. **Predict** — inspect the example and predict the important observable behavior when the learner has enough information to do so.
+2. **Run** — execute the known-good example on the target hardware and observe or measure what actually happens.
+3. **Investigate** — explain how the software and hardware cooperate to produce the observed behavior.
+4. **Modify** — change one meaningful factor, predict the result, run it, and compare prediction with evidence.
+5. **Make** — recreate or extend the capability with reduced guidance.
 
-Prediction is not a separate stage. Use it whenever a change or experiment can test the learner's current understanding.
+The cycle may be shortened when a step adds no learning value, but do not skip investigation merely because the example works.
 
-## 3. Start With a Working Example
+## 3. Start From a Worked Example
 
-For a new project, begin with a small, known-good example rather than asking the learner to design the whole system from scratch.
+For a new concept, prefer a small, known-good example over asking the learner to design the complete system from scratch.
 
-At the start, give only a brief orientation:
+The example should:
 
-- what the example does,
-- what observable result confirms that it is working,
-- how to run or observe it when needed.
+- have a clear observable result,
+- introduce a limited number of new concepts,
+- be small enough to trace,
+- use the real target hardware when practical.
 
-Do not explain every API, peripheral, circuit, or roadmap topic in advance.
+At the beginning, provide enough orientation for the learner to know what the example is supposed to do and how success is observed.
 
-Let the learner inspect the running code and identify unfamiliar APIs, parameters, syntax, hardware concepts, or connections. Use those questions as the normal entry points for deeper explanation.
+Do not explain the entire technology stack before the learner has a concrete example to attach it to.
 
-The working example is a scaffold, not the final learning goal.
+## 4. Investigate by Functional Subgoals
 
-## 4. Learn Software and Hardware Through the Same Behavior
-
-Treat one observable system behavior as the center of the investigation.
+Break the example into meaningful subgoals.
 
 Examples:
 
-- an LED changes state,
-- a button changes a GPIO level,
-- an interrupt changes program execution,
-- a UART character appears on a terminal,
-- a timer generates a periodic event,
-- an ADC produces a sample.
+- enable the peripheral clock,
+- configure a pin,
+- configure a peripheral,
+- start an operation,
+- wait for or detect an event,
+- move data,
+- update program state,
+- produce an observable output.
 
-For the behavior currently being studied, connect the relevant layers instead of teaching them separately.
+Explain why each subgoal is necessary and how the subgoals cooperate.
 
-A useful path is:
+Do not default to line-by-line translation.
 
-`project code -> library/driver -> CPU/register interface -> MCU peripheral -> pin/signal/protocol -> board circuit/external device -> observed result`
+Use `code-explanation.md` for detailed code explanation.
 
-This is a guide, not a mandatory checklist. Some behaviors do not require every layer, and some need an additional layer such as an interrupt controller, DMA, bus, sensor, or host operating system.
+## 5. Learn Hardware and Software as One System
 
-Start from the concrete code and behavior the learner can see, then move across layers only when needed to answer the current question.
+Embedded behavior should be explained across the hardware/software interface.
 
-Do not make hardware theory a detached lesson when it can be explained as part of the same causal path.
+For the current behavior, connect the relevant layers:
 
-## 5. Understand Beyond API Names
+`application code -> library/driver -> CPU/register interface -> MCU peripheral -> pin/signal/protocol -> board circuit/external device -> observed result`
 
-Library APIs are entry points into the system, not the final explanation.
+This is a causal model, not a mandatory checklist.
 
-For an important operation, the learner should gradually understand what the API causes or configures below the library boundary.
+Use only the layers needed for the current behavior. Add other mechanisms such as buses, interrupt controllers, DMA, sensors, or host software when they are part of the actual path.
 
-For example, understanding should progress from:
+Do not teach software and hardware as unrelated subjects when the project depends on their interaction.
+
+## 6. Teach Essential Concepts Proactively
+
+Do not wait for the learner to discover every important gap.
+
+During Investigate, identify the concepts that are necessary to explain the current behavior correctly and teach them when they become relevant.
+
+Examples include:
+
+- memory-mapped I/O,
+- peripheral clocks,
+- GPIO input/output paths,
+- alternate-function routing,
+- interrupt and exception flow,
+- timer counting,
+- serial framing,
+- ADC sampling,
+- electrical levels,
+- pull-up and pull-down networks.
+
+Do not expand into adjacent theory that is not needed for the current project.
+
+The learner's questions are useful signals, but they are not the only mechanism for deciding what must be taught.
+
+## 7. Move From Surface Code to Mechanism
+
+Library APIs are not the final explanation.
+
+For an important operation, progressively connect the API to the mechanism below it.
+
+For example:
 
 `gpio_toggle(...)`
 
-toward an explanation such as:
+should eventually be understood as something like:
 
-`software changes GPIO state -> GPIO peripheral/output logic changes -> pin voltage changes -> board circuit responds -> LED state changes`
+`software changes GPIO state -> GPIO peripheral changes output state -> output driver changes pin voltage -> board circuit responds -> LED changes state`
 
-The learner does not need to memorize every register or internal circuit.
+Likewise:
 
-Go deep enough to explain the current behavior accurately and to predict meaningful changes.
+`usart_send_blocking(...)`
 
-A practical test of understanding is:
+should eventually connect to:
 
-> If the library API names were hidden, could the learner still explain the important software-to-hardware path?
+`software writes data -> USART transmit logic serializes it -> TX signal appears on the configured pin -> receiving hardware observes the UART frame`
 
-If not, the understanding is probably still too dependent on the library surface.
+Do not require memorization of every register.
 
-## 6. Let the Learner Drive the Deep Dives
+Go deep enough that the learner can explain the behavior and predict important changes without depending only on the API name.
 
-Do not pre-expand the entire project into all possible knowledge areas.
+## 8. Keep Different Flows Distinct
 
-Normally:
-
-1. The learner runs and inspects the example.
-2. The learner notices an unfamiliar API, parameter, concept, signal, component, or behavior.
-3. Explain that item in its current context.
-4. Trace deeper only when doing so helps explain the behavior.
-5. Return to the project.
-
-If the learner's question exposes a deeper prerequisite, teach that prerequisite before continuing.
-
-Do not force the learner to study a topic merely because it is related to the project.
-
-When an important mechanism is still missing from the learner's model, point out the gap without expanding every surrounding topic.
-
-## 7. Use the Right Level of Explanation
-
-Prefer a concrete mental model first, then add precision as needed.
-
-Do not begin with register catalogs, block diagrams, or formal protocol details if the learner does not yet know why they matter.
-
-Likewise, do not leave the explanation at an oversimplified API description once the learner is asking how the hardware actually works.
-
-Use `code-explanation.md` for detailed code explanations.
-
-When explaining embedded behavior, distinguish between:
+When explaining a project, distinguish between:
 
 - source-code structure,
 - CPU control flow,
 - data flow,
 - configuration state,
-- runtime hardware signal or interrupt flow.
+- interrupt or exception flow,
+- electrical or protocol signal flow.
 
-Do not combine these into one sequence when they are different.
+Do not merge them into a single diagram or sequence when they are different.
 
-In particular, initialization code describes how the system is configured; it is not the same as the signal or data path that occurs later at runtime.
+In particular:
 
-## 8. Use Authoritative Sources When the Project Reaches Them
+- initialization code configures future behavior,
+- runtime code performs or requests operations,
+- hardware may continue operating after software has configured or triggered it,
+- interrupts can change CPU control flow without a normal function call from `main()`.
 
-Use sources to answer concrete questions, not to dump documentation.
+## 9. Use Authoritative Sources at the Point of Need
 
-For MCU-specific behavior, prefer:
+Use documentation to answer concrete questions raised by the project.
 
-- **library source** for what a library API actually does,
-- **reference manual** for peripherals, registers, buses, interrupts, and MCU behavior,
-- **datasheet** for pin functions, alternate functions, electrical characteristics, and device-specific limits,
-- **board schematic / board manual** for physical connections on the development board,
-- **official protocol or device documentation** for external interfaces and components.
+Prefer:
 
-If a simplified explanation is used, keep it consistent with the authoritative source and make the simplification clear when precision matters.
+- **library source** — what an API actually does,
+- **MCU reference manual** — registers, peripheral behavior, buses, interrupts, timers, DMA,
+- **MCU datasheet** — pin functions, alternate functions, electrical limits, device-specific facts,
+- **board schematic / user manual** — physical board connections,
+- **official component or protocol documentation** — external devices and interfaces.
 
-Do not infer board wiring from API names when the schematic can answer it.
+Use the right source for the right layer.
 
-Do not infer peripheral behavior from a board schematic when the MCU reference manual is the relevant source.
+Do not infer board wiring from API names when the schematic can establish it.
 
-## 9. Use the Roadmap for Classification, Not Sequence
+Do not infer MCU peripheral behavior from the board schematic when the reference manual is the relevant source.
 
-Use `knowledge/Embedded-Engineering-Roadmap.png` to identify and classify knowledge encountered during the project.
+## 10. Use the Roadmap as a Knowledge Map
 
-The roadmap is not the project learning order.
+Use `knowledge/Embedded-Engineering-Roadmap.png` to classify knowledge encountered during projects and to notice long-term gaps.
 
-Do not start a project by expanding every roadmap area it could possibly involve.
+Do not use the roadmap as the immediate learning sequence.
 
-Instead:
+Project progression and the causal structure of the current system determine what is learned next.
 
-`project behavior -> learner question -> explanation/investigation -> classify the encountered knowledge on the roadmap`
+The roadmap answers:
 
-Use the roadmap to notice broader coverage and gaps over time, not to force unrelated study into the current project.
+> Which larger knowledge area does this concept belong to?
 
-## 10. Verify the Mental Model With Observation
+It does not automatically answer:
 
-Embedded learning should connect explanations to observable evidence whenever practical.
+> What should be studied next in this project?
 
-Use the simplest useful observation first:
+## 11. Control Cognitive Load
+
+Introduce only a manageable amount of new material in one project or investigation.
+
+Prefer:
+
+- one primary behavior,
+- a small number of new mechanisms,
+- concrete examples,
+- visible subgoals,
+- diagrams or traces only when they clarify the mechanism.
+
+Avoid:
+
+- long register catalogs before they are needed,
+- complete protocol specifications for a small example,
+- explaining every line equally,
+- introducing multiple unrelated peripherals at once,
+- turning one project into a survey of the entire roadmap.
+
+When the current example becomes too dense, split it into smaller experiments.
+
+## 12. Use Concrete Tracing
+
+When behavior is difficult to understand, trace one concrete case through the system.
+
+Examples:
+
+- one LED state transition,
+- one button press,
+- one interrupt event,
+- one UART character,
+- one timer overflow,
+- one ADC conversion.
+
+Track the actual state, data, control event, or signal through the relevant layers.
+
+Use concrete traces to connect abstractions to the real system.
+
+## 13. Verify With Observation and Measurement
+
+A correct explanation should produce testable expectations.
+
+Use the simplest useful observation tool first:
 
 - visible LED or actuator behavior,
-- button/input behavior,
-- serial terminal output,
+- serial terminal,
 - debugger variables,
-- peripheral/register state.
+- memory or peripheral register view.
 
-Use instruments when they materially improve understanding:
+Use physical instruments when they add important evidence:
 
-- **multimeter** for static voltage or continuity,
-- **logic analyzer** for digital levels, timing, and protocols,
-- **oscilloscope** for waveform shape, timing, analog behavior, or signal-integrity questions.
+- **multimeter** — static voltage, resistance, continuity,
+- **logic analyzer** — digital levels, timing, UART/SPI/I2C frames,
+- **oscilloscope** — waveform shape, timing, analog signals, signal integrity.
 
-Do not require an instrument when the current concept can be verified more simply.
+Do not use an instrument merely because it is available.
 
-When possible, connect three things:
+Prefer the loop:
 
-`prediction -> observation/measurement -> explanation`
+`prediction -> observation or measurement -> explanation`
 
-A working output proves that the system produced the expected result; it does not by itself prove that the learner understands why.
+## 14. Modify to Test the Mental Model
 
-## 11. Modify to Test Understanding
+Modifications should test understanding, not merely create variety.
 
-Modify one main factor at a time when possible.
+Change one main factor at a time when possible.
 
-Before running the modified program, ask the learner to predict the observable result when the prediction is reasonably accessible from what has already been learned.
+Before running, predict the result when the learner has enough knowledge to make a meaningful prediction.
 
-Choose modifications that test a causal model, not random parameter changes.
+Useful modifications include:
 
-Examples include:
-
-- changing a delay value,
+- changing a delay or period,
+- changing GPIO mode or pull configuration,
 - changing an interrupt edge,
-- changing a GPIO mode,
-- changing a UART baud rate,
-- changing a timer period,
-- changing one routing or pin configuration.
+- changing a timer parameter,
+- changing baud rate,
+- changing a peripheral route or pin,
+- enabling or disabling one required configuration step.
 
 After running:
 
-- compare result with prediction,
-- if they match, identify what part of the model was supported,
-- if they differ, investigate the mismatch before moving on.
+1. compare prediction with observation,
+2. explain why they match or differ,
+3. update the mental model before moving on.
 
-Treat unexpected behavior as evidence about the system, not merely as an error to patch.
+Unexpected results are evidence about the system, not just bugs to remove.
 
-## 12. Debug Across Layer Boundaries
+## 15. Debug Across Layers
 
-When behavior is wrong, avoid changing many things at once.
+Debugging is part of learning the hardware/software interface.
 
-Use the current causal path to locate the broken boundary.
+When the observed result is wrong, locate the failed boundary instead of changing many things at once.
 
-For example:
+A useful sequence is:
 
 `program state -> peripheral configuration -> peripheral state -> pin/signal -> board circuit -> external observation`
 
-Check one boundary at a time.
+Possible failure classes include:
 
-Distinguish:
+- build or link failure,
+- wrong software control flow,
+- wrong register or peripheral configuration,
+- clock or timing error,
+- pin routing error,
+- protocol mismatch,
+- electrical or wiring problem,
+- measurement or observation error.
 
-- build/link problems,
-- software control-flow problems,
-- peripheral configuration problems,
-- timing/protocol problems,
-- electrical/wiring problems,
-- observation/tool problems.
+Do not assume every failure is a C-language problem.
 
-Do not assume every failure is a C bug.
+## 16. Use Scaffolding and Fade It
 
-## 13. Rebuild With Fading Support
+AI support should change with learner competence.
 
-Rebuild exists to move from following an example to independently recreating the capability.
+Early in a topic, AI may:
 
-Start from an empty or minimal source file.
+- provide a worked example,
+- identify functional subgoals,
+- model how to trace software into hardware,
+- demonstrate how to use the reference manual or schematic,
+- suggest what to measure.
+
+As competence grows, AI should shift toward:
+
+- hints,
+- questions,
+- partial traces,
+- requests for predictions,
+- requests for explanations,
+- targeted feedback.
+
+Eventually the learner should perform the same class of task with minimal guidance.
+
+Do not maintain permanent step-by-step assistance after the learner has demonstrated competence.
+
+## 17. Make / Rebuild for Transfer
+
+The final stage should require the learner to recreate or extend the capability rather than merely repeat the original example.
 
 The learner may:
 
 - consult documentation,
-- inspect the reference example,
-- copy a small module or pattern,
-- ask AI for partial code,
-- reuse already-understood boilerplate.
+- inspect previous examples,
+- reuse understood boilerplate,
+- ask for hints,
+- copy a small known pattern when appropriate.
 
-Do not copy the complete source file.
+Avoid copying the complete solution.
 
-The learner should be able to identify the essential steps needed to recreate the behavior and explain why those steps are needed.
+The learner should be able to:
 
-As the learner gains experience, reduce guidance. Do not keep giving the same level of step-by-step support indefinitely.
+- identify the essential subgoals,
+- select the required peripheral or mechanism,
+- configure the critical parts,
+- explain the causal path,
+- debug failures across software and hardware layers.
 
-If rebuilding fails, use the failure point to identify the next missing concept or incorrect assumption.
+Rebuild is successful when the learner can recreate the capability with substantially less support than was needed during the worked example.
 
-## 14. Learn Missing Knowledge on Demand
+## 18. Sequence Projects From Structured to Open-Ended
 
-Do not require all prerequisites to be mastered before starting a project.
+Early projects should be tightly scoped and structured.
 
-When a missing concept blocks understanding, modification, debugging, or rebuilding:
+Later projects should:
 
-1. identify the missing concept,
-2. learn enough of it to explain the current behavior correctly,
-3. apply it immediately to the project,
-4. return to the project.
+- reuse previously learned mechanisms,
+- introduce a limited number of new concepts,
+- require more independent design,
+- combine multiple peripherals or interfaces,
+- require more independent debugging and measurement.
 
-"Enough" means enough for a correct working model, not merely enough to compile the code.
+Move gradually from:
 
-Do not expand into adjacent theory unless it improves the current project understanding or the learner explicitly asks for it.
+`worked example -> guided modification -> partial design -> independent subsystem -> integrated project`
 
-## 15. What Counts as Understanding
+Do not jump directly from tiny examples to a large open-ended project.
 
-Understanding a project does not mean mastering every technology that appears somewhere in its full signal path.
+## 19. Revisit and Integrate Prior Knowledge
 
-For the project's main behavior, the learner should be able to explain the important causal chain across the relevant software and hardware layers.
+Later projects should reuse earlier concepts so they are not learned only once.
 
-Depending on the project, this may include being able to explain:
+Examples:
 
-- what the important code configures or initiates,
-- which MCU peripheral or mechanism is responsible,
-- how the relevant data, control event, or electrical signal moves,
-- how the board or external device participates,
-- why the observed behavior follows,
-- what a meaningful configuration change is expected to do.
+- GPIO learned in Blink should reappear in buttons, interrupts, timers, and serial projects.
+- Clock concepts should recur whenever a new peripheral is introduced.
+- Interrupt concepts should recur in USART, timers, ADC, and DMA.
+- Measurement skills should recur with increasing sophistication.
 
-Do not require irrelevant implementation details merely to satisfy a checklist.
+When a prior concept reappears, require more independent explanation and less re-teaching.
 
-## 16. Examples of Integrated Understanding
+## 20. Assess Understanding Through Explanation, Prediction, and Transfer
 
-These examples illustrate the intended style of investigation. They are not fixed templates.
+Do not judge understanding only by whether the program runs.
 
-### Blink
+Evidence of understanding includes the ability to:
 
-Start from the code that changes the LED state, then connect:
+- explain why the important configuration steps are required,
+- trace the main software-to-hardware causal path,
+- distinguish initialization from runtime behavior,
+- predict the effect of a meaningful change,
+- interpret a measurement or observed signal,
+- diagnose a failure at the correct layer,
+- recreate or transfer the mechanism to a related task.
 
-`GPIO operation -> GPIO peripheral/output state -> PA5 electrical level -> board LED circuit -> visible LED state`
+A working example without these abilities is successful execution, not yet demonstrated understanding.
 
-Clock configuration, output mode, push-pull behavior, and the LED circuit are learned when they become necessary to explain that chain.
+## 21. AI Role
 
-### Button Input
+AI acts as instructor, coach, and scaffold.
 
-Connect:
+AI should:
 
-`button circuit -> pin voltage -> GPIO input path/state -> software read -> program decision`
+- select the next useful investigation when guidance is needed,
+- proactively teach essential missing concepts,
+- explain mechanisms at the appropriate abstraction level,
+- use worked examples and subgoals,
+- ask for predictions when useful,
+- guide measurement and debugging,
+- gradually reduce support.
 
-Do not teach the button circuit and `gpio_get()` as unrelated topics.
+AI should not:
 
-### EXTI Interrupt
+- dump the full knowledge graph of a project at the beginning,
+- reduce every question to API documentation,
+- solve every modification or rebuild task immediately,
+- keep the learner dependent on AI-generated code,
+- confuse successful execution with conceptual understanding.
 
-Keep setup and runtime behavior separate.
+## 22. Repository Boundaries
 
-Setup may include:
+Project-specific experiments, measurements, observations, debugging notes, and design decisions belong under `projects/`.
 
-`GPIO/EXTI routing + trigger configuration + interrupt enable + NVIC enable`
+Reusable concepts may be distilled into `knowledge/` when they justify a dedicated knowledge entry.
 
-Runtime may include:
-
-`pin edge -> EXTI detects event -> pending/request -> NVIC -> CPU exception entry -> ISR -> return`
-
-### USART Output
-
-Connect:
-
-`program output -> library/runtime output path -> USART write -> USART peripheral serializes data -> TX routing/pin -> board interface -> terminal observation`
-
-Protocol framing, baud rate, alternate function routing, and board connections are introduced where they explain this path.
-
-## 17. AI Guidance
-
-At the start of a project, keep the introduction brief.
-
-Do not analyze and explain the whole project before the learner has inspected it.
-
-Let the learner discover unfamiliar items and ask questions. Respond to the current question while preserving the larger project context.
-
-Prefer one useful next investigation or experiment over a long lesson plan.
-
-Do not reveal an experimentally testable result before the learner has had a reasonable chance to predict it.
-
-Do not confuse API usage with hardware understanding.
-
-Do not force project wrap-up or documentation work unless the learner asks for it.
-
-## 18. Repository Boundaries
-
-Project-specific work, experiments, observations, results, and decisions belong under `projects/`.
-
-Reusable knowledge may be distilled into `knowledge/` when it justifies a dedicated entry.
-
-Do not turn every project observation into a knowledge document.
+The learning skill should guide the project process; it should not require documentation work that does not contribute to learning.
