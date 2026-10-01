@@ -4,87 +4,93 @@
 ## 1. Overview
 ---
 
-GPIO stands for **General-Purpose Input/Output**. A GPIO pin is a microcontroller pin whose digital function can be configured by software rather than being fixed to one dedicated purpose.
+GPIO 是 **General-Purpose Input/Output（通用输入/输出）** 的缩写。
 
-GPIO is one of the main interfaces between software and the physical world. Software configures and reads or writes GPIO state; the GPIO peripheral turns that state into electrical behavior at a pin.
+GPIO pin 是 MCU 上一种可以由软件配置用途的数字引脚。它不像某些专用引脚那样只承担固定功能，而是可以根据配置用作 input、output、alternate function 等不同角色。
+
+GPIO 是软件和物理世界之间最常见的接口之一。软件修改 GPIO peripheral 的状态，GPIO peripheral 再把这些状态体现为 pin 上的实际电气行为。
 
 ---
 ## 2. Ports and Pins
 ---
 
-GPIO pins are commonly grouped into **ports**.
+GPIO pin 通常按照 **Port** 分组。
 
-On STM32 devices, names such as `PA5` and `PC13` mean:
+在 STM32 中，像 `PA5`、`PC13` 这样的名称表示：
 
-- `PA5`: Port A, pin 5.
-- `PC13`: Port C, pin 13.
+- `PA5`：Port A 的 pin 5；
+- `PC13`：Port C 的 pin 13。
 
-A port groups several pins under one GPIO peripheral. Software normally selects both the port and the pin when configuring or accessing GPIO.
+一个 GPIO Port 管理一组 pin。软件配置或访问 GPIO 时，通常需要同时指定 Port 和 Pin。
 
-The exact number of ports and pins depends on the microcontroller and package.
+具体有多少个 Port、每个 Port 有多少可用 pin，取决于具体 MCU 型号和 package。
 
 ---
 ## 3. Digital Levels
 ---
 
-A digital GPIO works with logical states usually written as:
+数字 GPIO 通常使用两个逻辑状态：
 
-- **LOW** — logic 0.
-- **HIGH** — logic 1.
+- **LOW** — logic 0；
+- **HIGH** — logic 1。
 
-These are logical states, not universal voltage values. The actual voltage ranges accepted as LOW or HIGH are defined by the device's electrical characteristics.
+LOW 和 HIGH 是逻辑状态，不是固定不变的电压值。什么电压范围会被 MCU 识别为 LOW 或 HIGH，要以具体器件 datasheet 中的 electrical characteristics 为准。
 
-When a GPIO is used as an output, the output circuitry drives the pin toward a LOW or HIGH electrical level.
+GPIO 作为 output 时，output circuitry 会把 pin 驱动到对应的 LOW 或 HIGH 电平。
 
-When a GPIO is used as an input, the input circuitry interprets the pin voltage as a digital state.
+GPIO 作为 input 时，input circuitry 会根据 pin 上的实际电压判断当前是 LOW 还是 HIGH。
 
 ---
 ## 4. GPIO Modes
 ---
 
-A GPIO pin is normally configured for one of several roles.
+GPIO pin 通常可以配置成几种基本角色。
 
 ### 4.1 Input
 
-The pin receives a digital signal from outside the microcontroller.
+Pin 用来接收 MCU 外部的数字信号。
 
-See [GPIO Input](../002-gpio-input/README.md).
+见 [GPIO Input](../002-gpio-input/README.md)。
 
 ---
 
 ### 4.2 Output
 
-The microcontroller drives a digital level onto the pin.
+MCU 通过 pin 向外输出数字电平。
 
-See [GPIO Output](../003-gpio-output/README.md).
+见 [GPIO Output](../003-gpio-output/README.md)。
 
 ---
 
 ### 4.3 Alternate Function
 
-The pin is connected internally to another peripheral, such as a timer, USART, SPI, or I2C controller.
+Pin 连接到 MCU 内部的其他 peripheral，例如 timer、USART、SPI、I2C。
 
-See [Alternate Functions](../006-alternate-functions/README.md).
+这类连接不是普通 GPIO output，而是由对应 peripheral 使用这个物理 pin。
+
+见 [Alternate Functions](../006-alternate-functions/README.md)。
 
 ---
 
 ### 4.4 Analog
 
-The digital GPIO path is not used as the primary signal path. This mode is commonly used when the pin belongs to an analog peripheral such as an ADC or DAC.
+Pin 主要用于 analog peripheral，例如 ADC 或 DAC，此时数字 GPIO 路径不是主要信号路径。
 
 ---
 ## 5. GPIO as a Software-Hardware Interface
 ---
 
-GPIO is controlled through hardware state exposed to software. On STM32, this includes configuration and data registers belonging to each GPIO port.
+GPIO 的配置和状态通过 hardware registers 暴露给软件。
 
-Software changes those registers; the GPIO peripheral changes how the corresponding pins behave.
+在 STM32 中，每个 GPIO Port 都有自己的 configuration registers 和 data registers。
 
-This relationship is the basic bridge:
+软件修改这些 registers，GPIO peripheral 根据 register 中的状态改变 pin 的行为。
+
+核心关系是：
 
 `software -> GPIO peripheral state -> pin electrical behavior`
 
-The register model is covered separately in [GPIO Register Model](../007-gpio-register-model/README.md).
+GPIO 的 register model 见 [GPIO Register Model](../007-gpio-register-model/README.md)。
 
 ---
 ## 6. Related Knowledge
