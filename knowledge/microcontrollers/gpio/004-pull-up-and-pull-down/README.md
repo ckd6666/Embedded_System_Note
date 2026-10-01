@@ -4,73 +4,73 @@
 ## 1. Overview
 ---
 
-A digital input needs a defined voltage to be read reliably as LOW or HIGH.
+Digital input 需要一个明确的电压状态，才能稳定地被读取为 LOW 或 HIGH。
 
-A **pull-up** or **pull-down** resistor gives the pin a default electrical state when no stronger external source is driving it.
+**Pull-up** 和 **pull-down** resistor 用来在没有更强外部驱动时，为 pin 提供默认电气状态：
 
-- pull-up: weakly biases the pin toward HIGH;
-- pull-down: weakly biases the pin toward LOW.
+- pull-up：弱地把 pin 偏向 HIGH；
+- pull-down：弱地把 pin 偏向 LOW。
 
 ---
 ## 2. Why Pull Resistors Are Needed
 ---
 
-If an input pin is left electrically unconnected, its voltage may not stay at a stable level. The pin is then **floating**.
+如果 input pin 没有连接到明确的电气驱动源，它的电压可能无法稳定在某个状态，这种情况称为 **floating**。
 
-A floating input can change state because of leakage current, electrical noise, or nearby signals.
+Floating input 可能因为 leakage current、electrical noise 或附近信号而改变电压，从而导致数字读取结果不稳定。
 
-A pull resistor prevents this by giving the pin a weak default connection to a supply rail.
+Pull resistor 通过给 pin 提供一个较弱的默认连接，避免 pin 长时间处于不确定状态。
 
 ---
 ## 3. Pull-Up
 ---
 
-A pull-up resistor connects the signal weakly toward the positive supply.
+Pull-up resistor 把 signal 弱地连接到 positive supply。
 
-When nothing else drives the line, the pin tends to read HIGH.
+当没有其他电路驱动这条线时，pin 会倾向于保持 HIGH。
 
-A common button circuit uses a pull-up and a switch to ground:
+常见按钮电路会使用 pull-up resistor，并让 switch 在按下时接地：
 
-- switch open: the pull-up holds the pin HIGH;
-- switch closed: the switch provides a stronger path to ground, so the pin becomes LOW.
+- switch open：pull-up 把 pin 保持在 HIGH；
+- switch closed：switch 提供更强的 ground path，pin 变成 LOW。
 
-The pull-up does not force the pin HIGH under all conditions. It provides a weak default state that another circuit can override.
+Pull-up 并不是无条件强制 HIGH，而是在没有更强驱动时提供默认 HIGH。
 
 ---
 ## 4. Pull-Down
 ---
 
-A pull-down resistor connects the signal weakly toward ground.
+Pull-down resistor 把 signal 弱地连接到 ground。
 
-When nothing else drives the line, the pin tends to read LOW.
+当没有其他电路驱动时，pin 会倾向于保持 LOW。
 
-If an external circuit actively drives the signal HIGH, that stronger drive overrides the pull-down.
+如果外部电路主动把 signal 驱动到 HIGH，这个更强的 drive 会覆盖 pull-down 的默认作用。
 
 ---
 ## 5. Internal and External Pull Resistors
 ---
 
-Many microcontrollers provide configurable **internal** pull-up and pull-down resistors.
+很多 MCU 都提供可配置的 **internal pull-up** 和 **internal pull-down** resistor。
 
-They are convenient when a weak default state is sufficient and an external resistor is not required by the circuit.
+当只需要一个弱的默认状态时，internal pull 很方便。
 
-External pull resistors are still used when the circuit needs a specific resistance, timing behavior, current level, or electrical requirement.
+如果电路对 resistance、timing、current 或其他 electrical characteristic 有明确要求，则仍然可能需要 external pull resistor。
 
-The resistance of an internal pull resistor is device-specific and must be taken from the microcontroller documentation when its value matters.
+Internal pull resistor 的实际 resistance 是 device-specific，具体数值要查对应 MCU 文档。
 
 ---
 ## 6. Pull Resistor vs Active Output
 ---
 
-A pull resistor is a weak bias, not the same as actively driving a pin.
+Pull resistor 是一种较弱的 bias，不等于 active output drive。
 
-A push-pull output actively drives HIGH or LOW through its output stage.
+Push-pull output 会通过 output stage 主动驱动 HIGH 或 LOW。
 
-A pull-up or pull-down only establishes a default level when stronger drivers are absent.
+Pull-up / pull-down 只是在没有更强驱动时建立默认电平。
 
-This distinction becomes especially important with open-drain outputs.
+这个区别在 open-drain output 中尤其重要。
 
-See [Output Types](../005-output-types/README.md).
+见 [Output Types](../005-output-types/README.md)。
 
 ---
 ## 7. Related Knowledge
