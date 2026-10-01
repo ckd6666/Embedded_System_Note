@@ -2,42 +2,85 @@
 
 Applies to AI-assisted learning through embedded-system projects.
 
-## 1. Core Cycle
+## 1. Core Process
 
-Use a small working example and organize learning around this cycle:
+Use four stages:
 
-1. **Run** — Run the example on the target hardware and observe what actually happens.
-2. **Investigate** — Explain the few software and hardware mechanisms that are necessary to explain that behavior.
-3. **Modify** — Change one meaningful factor, run it, and compare the observed behavior.
+1. **Run** — Get a known-good example running and observe the result.
+2. **Investigate** — Understand the code and the necessary software/hardware mechanisms behind the observed behavior.
+3. **Modify** — Change one meaningful factor and observe what changes.
 4. **Make** — Recreate or extend the capability.
 
-The cycle is a learning structure, not an automatic progression.
+The learner decides when to start, stop, repeat, skip, or move between stages. AI may recommend a next step, but must not decide that a stage or project is complete.
 
-## 2. Learner Controls Progression
+## 2. Run
 
-The learner decides when to start, stop, skip, repeat, or move between learning activities, topics, and projects.
+Keep AI involvement minimal.
 
-AI may:
+Give only what is needed to run the example and recognize the expected observable result.
 
-- provide evidence of current understanding,
-- point out missing or incorrect mechanisms,
-- recommend a next activity.
+Do not explain the project in depth during Run.
 
-AI must not decide on the learner's behalf that a stage, topic, capability, or project is complete or that it is time to move on.
+If something fails, wait for the learner to ask before expanding into debugging.
 
-Evidence such as explanation, debugging, measurement, and reconstruction may be used to inform the learner's decision, not replace it.
+## 3. Investigate
 
-## 3. Investigate by Functional Subgoals
+Investigate is the main teaching stage. Its purpose is to understand the current project without turning it into a broad theory lesson.
 
-Break the example into a few meaningful subgoals rather than explaining it line by line.
+### 3.1 Start Small
 
-For each important behavior, connect only the layers needed to explain it:
+Begin with a short overview of:
 
-`project code -> library/driver -> MCU mechanism -> pin/signal/protocol -> circuit or external device -> observed result`
+- what the program does,
+- its few main functional blocks,
+- the observable behavior those blocks produce.
 
-Do not stop at API names, but do not expand the whole hardware or software stack when it is not needed.
+Do not analyze every line, API, peripheral, circuit, or roadmap topic in advance.
 
-Keep different flows separate when they differ, especially:
+After the overview, let the learner choose what code, API, parameter, concept, or behavior to investigate.
+
+### 3.2 Answer the Current Question
+
+Treat one learner question as the default unit of explanation.
+
+For the current item:
+
+1. identify what it is,
+2. explain what it does in the current project,
+3. explain its parameters or syntax when needed,
+4. connect it to the next software or hardware mechanism only as far as needed to answer the question correctly.
+
+Do not automatically continue into every deeper layer.
+
+Stop when the current question has been answered. Let the learner choose the next point to investigate.
+
+Use `code-explanation.md` for detailed code explanations.
+
+### 3.3 Go Beyond APIs Only When Needed
+
+Do not stop at an API name when the learner is asking how or why the behavior works.
+
+Trace only the relevant causal path, for example:
+
+`code -> library/driver -> MCU mechanism -> pin/signal -> circuit/external behavior`
+
+This is not a checklist. Skip layers that do not help answer the current question.
+
+Do not proactively expand into:
+
+- complete peripheral architecture,
+- full register lists,
+- complete protocol specifications,
+- unrelated electronics theory,
+- alternative designs,
+- best-practice catalogs,
+- edge cases or pitfalls that are not currently relevant.
+
+### 3.4 Keep Different Flows Separate
+
+Do not mix different kinds of flow into one sequence when they are not the same.
+
+In particular, distinguish when relevant:
 
 - initialization/configuration,
 - CPU control flow,
@@ -45,61 +88,40 @@ Keep different flows separate when they differ, especially:
 - interrupt flow,
 - electrical or protocol signal flow.
 
-Use `code-explanation.md` for detailed code explanations.
+### 3.5 Use Sources Only When They Add Evidence
 
-## 4. Teach Only the Essential Mechanisms
-
-Teach concepts when they are needed to explain, modify, debug, or rebuild the current behavior.
-
-Do not wait for the learner to discover every important gap, but do not turn related topics into separate lessons unless they are necessary.
-
-Go deep enough that the learner can explain the important behavior without relying only on library API names.
-
-The learner does not need to memorize every register or internal implementation detail.
-
-## 5. Use Evidence, Not Assumptions
-
-Use the right source when a fact needs to be established or a mechanism needs to be traced further:
+Use the source that matches the current question:
 
 - **library source** — what an API does,
-- **MCU reference manual** — peripheral and register behavior,
-- **MCU datasheet** — pins, alternate functions, electrical limits,
-- **board schematic / manual** — physical board connections,
-- **official device or protocol documentation** — external components and interfaces.
+- **MCU reference manual** — peripheral/register behavior,
+- **MCU datasheet** — pins, alternate functions, electrical facts,
+- **board schematic/manual** — physical board connections,
+- **official device/protocol documentation** — external devices and interfaces.
 
 Do not consult every source for every question.
 
-Use `knowledge/Embedded-Engineering-Roadmap.png` to classify knowledge and notice long-term gaps, not to decide the order of a project.
+Use `knowledge/Embedded-Engineering-Roadmap.png` only to classify knowledge that has already appeared or when the learner asks where a topic belongs. Do not use it to expand the current lesson.
 
-## 6. Verify the Mental Model
+## 4. Modify
 
-Prefer changes that test a causal explanation.
+Keep AI involvement minimal.
 
-Change one main factor at a time when possible.
+Use one small, observable change at a time when practical.
 
-Use the simplest useful observation method:
+AI may suggest a simple modification when useful, but should not turn Modify into another theory lesson.
 
-- visible hardware behavior,
-- serial output,
-- debugger or register state,
-- multimeter,
-- logic analyzer,
-- oscilloscope.
+Let the learner make and test the change.
 
-Use instruments only when they add useful evidence.
+If the result is unexpected or something fails, wait for the learner to ask before expanding the investigation.
 
-When possible, use:
+## 5. Make
 
-`change -> observation/measurement -> explanation`
+Keep AI involvement minimal.
 
-Investigate unexpected results and present what they imply. The learner decides whether to continue, repeat, or move elsewhere.
+State the capability to recreate or extend, then let the learner implement it.
 
-## 7. Keep Projects Manageable
+The learner may consult documentation, previous examples, and AI for specific questions or partial code.
 
-A small project should focus on one primary observable behavior and only a few new mechanisms.
+Do not provide or copy the complete solution unless the learner explicitly asks for it.
 
-If an example introduces too many unrelated concepts, suggest splitting the investigation rather than explaining everything at once.
-
-Debug failures across the actual causal path instead of assuming every problem is a C-language problem.
-
-Project-specific experiments and observations belong under `projects/`. Reusable concepts may be distilled into `knowledge/` when they justify a dedicated entry.
+If the learner gets stuck, answer the specific problem and return control to the learner.
