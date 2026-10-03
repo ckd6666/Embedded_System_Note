@@ -98,7 +98,20 @@ Reset value 说明 software 尚未主动配置时 hardware 从什么状态开始
 具体 reset value 必须以目标 device 的官方文档为准。
 
 ---
-## 7. Related Knowledge
+---
+## 7. Course Resources
+---
+
+这个主题第一次学习时，仅靠文字容易缺少“bit 如何变成可保存状态”的直觉，因此推荐先看少量课程，再把本章作为复习和查阅材料。
+
+- **Crash Course Computer Science — 第 6 集《寄存器 & 内存》**  
+  Bilibili：https://www.bilibili.com/video/BV1EW411u7th/  
+  精校中文字幕。约 12 分钟，适合先建立 Register、RAM 和 CPU 之间的基本直觉。
+
+- **Nand2Tetris Part 1 — Week 3, Unit 3.1–3.4**  
+  Bilibili：https://www.bilibili.com/video/BV1KJ411s7QJ/  
+  中文字幕；页面注明字幕仍有待校正。重点看 Sequential Logic、Flip Flops、Memory Units、Counters，用来理解“硬件为什么能保存 bit 状态”。
+## 8. Related Knowledge
 ---
 
 - [CPU Registers](../002-cpu-registers/README.md)
@@ -108,7 +121,7 @@ Reset value 说明 software 尚未主动配置时 hardware 从什么状态开始
 - [Reading Register Documentation](../006-reading-register-documentation/README.md)
 
 ---
-## 8. References
+## 9. References
 ---
 
 - STMicroelectronics, [PM0214 — STM32 Cortex-M4 MCUs and MPUs programming manual](https://www.st.com/resource/en/programming_manual/dm00046982-stm32-cortex-m4-mcus-and-mpus-programming-manual-stmicroelectronics.pdf)
