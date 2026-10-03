@@ -164,7 +164,16 @@ Software 调用 GPIO API 后，library 最终会修改 GPIO peripheral 中对应
 Peripheral register 把 software configuration / data 转换成 GPIO hardware 可以使用的状态。
 
 ---
-## 8. Related Knowledge
+---
+## 8. Course Resources
+---
+
+Peripheral register 最容易在真实 MCU 上建立直觉，建议配合 STM32 的 register mapping 内容学习。
+
+- **正点原子 STM32 HAL 库开发课程 — 第 16–18 讲**  
+  Bilibili：https://www.bilibili.com/video/BV1bv4y1R7dp/  
+  中文讲解。重点看“存储器映射”“寄存器映射 1”“寄存器映射 2”，用于理解 peripheral register 如何映射到 MCU address space，以及 software 为什么能通过 register 控制外设。
+## 9. Related Knowledge
 ---
 
 - [Register Fundamentals](../001-register-fundamentals/README.md)
@@ -174,7 +183,7 @@ Peripheral register 把 software configuration / data 转换成 GPIO hardware �
 - [GPIO Register Model](../../../microcontrollers/gpio/007-gpio-register-model/README.md)
 
 ---
-## 9. References
+## 10. References
 ---
 
 - Arm, [CMSIS-Core Peripheral Access](https://arm-software.github.io/CMSIS_6/latest/Core/group__peripheral__gr.html)
