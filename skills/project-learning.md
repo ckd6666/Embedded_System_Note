@@ -150,7 +150,7 @@ When recommending a course:
 
 - recommend only the specific lessons needed for the current knowledge gap when possible;
 - prefer high-quality, stable resources that match the learner's current level;
-- for non-Chinese courses, require usable Chinese subtitles or translation; native Chinese courses are also acceptable;
+- prefer courses that were originally taught in another language and have usable Chinese subtitles or translation; use courses originally taught in Chinese only when no suitable translated option is available;
 - state when Chinese subtitles are machine-translated if that is known;
 - use the course to build intuition and the knowledge entry for concise review and lookup;
 - do not turn the recommendation into a mandatory detour or decide that the learner must pause the current project.
