@@ -126,15 +126,19 @@ int c = a + b;
 这和 peripheral register 不同。Peripheral register 往往代表明确的 hardware control/status state，软件访问它是为了直接影响某个外设。
 
 ---
----
 ## 8. Course Resources
 ---
 
 CPU registers 和 instruction execution、function call、stack、control flow 连在一起，第一次学习时更适合配合动态讲解。
 
-- **《从 CPU 架构到操作系统实现》— Cortex-M 寄存器章 4.1–4.5**  
-  Bilibili：https://www.bilibili.com/video/BV1ErEaznEaB/  
-  中文讲解。重点覆盖 ARM Cortex-M 寄存器组、general-purpose registers、PC、SP、LR，和本章内容直接对应。
+- **MIT 6.004 Computation Structures — L02–L04**  
+  Bilibili：https://www.bilibili.com/video/BV197411s736/  
+  中英 CC 字幕，中文为机翻。L02 介绍 RISC-V registers 与 assembly，L03 讲 procedure 和 stack，L04 继续连接 procedure、stack 与 MMIO。
+
+- **Embedded Systems Bare-Metal Programming Ground Up™ (STM32) — 23.5 ARM Cortex-M Registers**  
+  Bilibili：https://www.bilibili.com/video/BV1VwgYz4Etn/  
+  大模型机翻双语字幕。用于把通用 CPU-register 概念对应到 ARM Cortex-M。
+
 ## 9. Related Knowledge
 ---
 
