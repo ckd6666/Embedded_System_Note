@@ -196,7 +196,16 @@ gpio_mode_setup(GPIOA, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO5);
 选对文档比在所有官方资料中同时搜索更重要。
 
 ---
-## 10. Related Knowledge
+---
+## 10. Course Resources
+---
+
+阅读 register 文档更适合跟着真实 STM32 文档示范一次，再回到 reference manual 自己查。
+
+- **正点原子 STM32 HAL 库开发课程 — 第 4、16–18 讲**  
+  Bilibili：https://www.bilibili.com/video/BV1bv4y1R7dp/  
+  中文讲解。第 4 讲用于学习查看数据手册；第 16–18 讲用于理解存储器映射和寄存器映射。
+## 11. Related Knowledge
 ---
 
 - [Register Fundamentals](../001-register-fundamentals/README.md)
@@ -206,7 +215,7 @@ gpio_mode_setup(GPIOA, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO5);
 - [Register Fields and Access Semantics](../005-register-fields-and-access-semantics/README.md)
 
 ---
-## 11. References
+## 12. References
 ---
 
 - STMicroelectronics, [RM0390 — STM32F446xx reference manual](https://www.st.com/resource/en/reference_manual/rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
