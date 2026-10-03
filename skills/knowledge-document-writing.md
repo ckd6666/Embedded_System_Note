@@ -157,7 +157,7 @@ For course resources:
 
 - recommend the smallest relevant set of lessons rather than an entire course when possible;
 - explain briefly what each recommended lesson helps the learner understand;
-- for non-Chinese courses, include only resources with usable Chinese subtitles or translation; native Chinese courses are also acceptable;
+- prefer courses that were originally taught in another language and have usable Chinese subtitles or translation; use courses originally taught in Chinese only when no suitable translated option is available;
 - state when Chinese subtitles are machine-translated if known;
 - prefer stable, reputable course sources and verify that the linked content actually covers the chapter;
 - keep course resources separate from `References`, because courses are learning aids rather than the factual authority for the chapter;
