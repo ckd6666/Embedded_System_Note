@@ -131,6 +131,32 @@ Do not consult every source for every question.
 
 Use a deeper source only when it is needed to establish a fact or complete the current bridge.
 
+### 3.6 Choose the Right Learning Medium
+
+When a question exposes a broad foundational topic, decide whether focused explanation and a knowledge document are enough for first-time learning.
+
+Prefer self-study from the knowledge entry when the topic is narrow, local, and can be understood correctly from a compact explanation plus examples.
+
+Recommend a course or specific course lessons when the topic:
+
+- spans several connected concepts or abstraction layers,
+- depends heavily on dynamic or structural mental models,
+- is difficult to understand from isolated definitions,
+- or would require an unusually long knowledge document to teach from first principles.
+
+Typical examples include computer architecture, registers and memory, buses, interrupts, clocks, protocol timing, and operating-system mechanisms.
+
+When recommending a course:
+
+- recommend only the specific lessons needed for the current knowledge gap when possible;
+- prefer high-quality, stable resources that match the learner's current level;
+- for non-Chinese courses, require usable Chinese subtitles or translation; native Chinese courses are also acceptable;
+- state when Chinese subtitles are machine-translated if that is known;
+- use the course to build intuition and the knowledge entry for concise review and lookup;
+- do not turn the recommendation into a mandatory detour or decide that the learner must pause the current project.
+
+The learner decides whether to use the course and when to return to the project.
+
 ## 4. Modify
 
 Keep AI involvement minimal.
