@@ -140,7 +140,32 @@ Do not use arrows, boxes, indentation, or other notation to simulate a diagram.
 
 Do not create separate example-oriented files such as `examples.c` or `exercises.md` unless explicitly requested.
 
-## 9. Default Document Shape
+## 9. Course Resources for Broad Topics
+
+A knowledge entry should remain self-contained enough for later lookup, but a large foundational topic may be inefficient to learn for the first time from text alone.
+
+When creating or substantially revising an entry, judge whether a course would materially improve first-time understanding.
+
+Add a `Course Resources` section only when the topic:
+
+- spans several connected concepts or abstraction layers,
+- depends heavily on dynamic or structural mental models,
+- is difficult to understand from isolated definitions,
+- or would otherwise require excessive explanatory text.
+
+For course resources:
+
+- recommend the smallest relevant set of lessons rather than an entire course when possible;
+- explain briefly what each recommended lesson helps the learner understand;
+- for non-Chinese courses, include only resources with usable Chinese subtitles or translation; native Chinese courses are also acceptable;
+- state when Chinese subtitles are machine-translated if known;
+- prefer stable, reputable course sources and verify that the linked content actually covers the chapter;
+- keep course resources separate from `References`, because courses are learning aids rather than the factual authority for the chapter;
+- do not add course links merely because a topic is important.
+
+The knowledge document remains the concise learning and lookup record. The course is supplemental material for building intuition.
+
+## 10. Default Document Shape
 
 Use only the sections that help teach the topic.
 
@@ -153,10 +178,14 @@ A common learning-oriented shape is:
 
 ## Core Concepts
 
+## Course Resources
+
 ## Related Knowledge
 
 ## References
 ```
+
+`Course Resources` is optional and should appear only when Section 9 applies.
 
 `Overview` should establish what the reader is about to learn.
 
@@ -166,7 +195,7 @@ For a narrow term or rule, `Definition` and `Core Rules` may be more appropriate
 
 Do not force every document into the same headings.
 
-## 10. Default Layout
+## 11. Default Layout
 
 Use numbered headings for major sections and hierarchical numbering for subsections when needed.
 
