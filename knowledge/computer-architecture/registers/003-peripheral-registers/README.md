@@ -4,9 +4,9 @@
 ## 1. Overview
 ---
 
-Peripheral registers 是 GPIO、USART、Timer、ADC、DMA 等 peripheral 内部暴露给软件的控制、状态和数据接口。
+Peripheral registers 是 GPIO、USART、Timer、ADC、DMA 等 peripheral 暴露给 software 的控制、状态和数据接口。
 
-软件通过读写这些 registers 来：
+Software 通过 read / write 这些 registers 来：
 
 - 配置 peripheral；
 - 启动或停止某个功能；
@@ -34,7 +34,7 @@ Peripheral registers 常见可以按用途分成几类。
 - interrupt enable；
 - channel selection。
 
-软件修改这些 bit 后，peripheral 的工作方式随之改变。
+Software 修改这些 bit 后，peripheral 的工作方式可能随之改变。
 
 ---
 
@@ -50,7 +50,7 @@ Peripheral registers 常见可以按用途分成几类。
 - overflow；
 - error condition。
 
-有些 status bit 由 hardware 自动设置，软件只负责读取或清除。
+有些 status bit 由 hardware 自动设置，software 只负责读取或按规定清除。
 
 ---
 
@@ -65,13 +65,13 @@ Peripheral registers 常见可以按用途分成几类。
 - SPI receive data；
 - GPIO input/output data。
 
-Data register 的具体读写行为取决于对应 peripheral。
+Data register 的具体 read / write 行为取决于对应 peripheral。
 
 ---
 ## 3. Register Bits Have Hardware Meaning
 ---
 
-Peripheral register 中的 bit 不是普通软件变量。
+Peripheral register 中的 bit 不是普通 software variable。
 
 例如某个 control register 的 bit 0 可能定义为：
 
@@ -80,13 +80,13 @@ Peripheral register 中的 bit 不是普通软件变量。
 1 = peripheral enabled
 ```
 
-软件把这个 bit 写成 1 后，hardware control logic 会按照这个定义改变 peripheral 状态。
+Software 把这个 bit 写成 1 后，hardware control logic 会按照该 field 的定义工作。
 
-因此：
+更准确地说：
 
-> 写 register = 改变 peripheral hardware state
+> write peripheral register = 按该 register 的定义向 peripheral 提供 control 或 data，可能改变 hardware state 或触发 hardware action。
 
-但前提是必须按照 reference manual 中定义的语义访问。
+具体效果必须以 reference manual 为准。
 
 ---
 ## 4. Hardware Can Update Registers
@@ -103,7 +103,7 @@ Hardware 也可能自动更新 register 或 field。
 - Timer counter 随 clock 自动变化；
 - GPIO input register 反映 pin 当前电平。
 
-所以 peripheral register 是 software 与 hardware 共享的接口。
+因此 peripheral register 经常是 software 与 hardware 共享的状态接口。
 
 这也是为什么不能简单把它们当成普通 RAM variable 来理解。
 
@@ -122,7 +122,7 @@ Peripheral registers 可能具有不同 access type：
 - write 1 to clear；
 - write 0 to clear；
 - read 后自动清除；
-- 写入触发一次 hardware action。
+- write 后触发一次 hardware action。
 
 因此，访问一个 peripheral register 前，必须先理解它的具体 access semantics。
 
@@ -143,9 +143,9 @@ Peripheral registers 可能具有不同 access type：
 
 - `PC` 是 CPU register；
 - `GPIOA_ODR` 是 GPIO peripheral register；
-- `USART2_SR` / 对应 USART status register 是 peripheral register。
+- USART status / data registers 也是 peripheral registers。
 
-CPU 会通过 memory-mapped I/O 访问 peripheral registers。
+CPU 通常通过 memory-mapped I/O 访问 peripheral registers。
 
 ---
 ## 7. Example: GPIO
@@ -153,15 +153,15 @@ CPU 会通过 memory-mapped I/O 访问 peripheral registers。
 
 以 GPIO output 为例：
 
-软件调用 GPIO API 后，library 最终会修改 GPIO peripheral 中对应的 register state。
+Software 调用 GPIO API 后，library 最终会修改 GPIO peripheral 中对应的 register state。
 
 例如：
 
 - mode register 决定 pin 是 input 还是 output；
 - output type register 决定 push-pull 或 open-drain；
-- output data register 保存 output state。
+- output data register 表示 output state。
 
-Peripheral register 把“软件配置”转换成 GPIO hardware 可以直接使用的状态。
+Peripheral register 把 software configuration / data 转换成 GPIO hardware 可以使用的状态。
 
 ---
 ## 8. Related Knowledge
