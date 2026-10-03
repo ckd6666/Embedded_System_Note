@@ -143,7 +143,20 @@ Peripheral registers 位于 MCU peripheral hardware 中，CPU 通过 address spa
 - `GPIOA_ODR`：memory-mapped peripheral register。
 
 ---
-## 8. Related Knowledge
+---
+## 8. Course Resources
+---
+
+Memory-Mapped I/O 涉及 CPU、address space、memory access 和 peripheral 多层连接，适合用课程先建立整体过程。
+
+- **MIT 6.004 Computation Structures — L04 Procedures and MMIO**  
+  Bilibili：https://www.bilibili.com/video/BV197411s736/  
+  提供中英 CC 字幕，中文为机翻。L04 直接讲 MMIO，适合建立 CPU 通过 memory address 访问 I/O 的整体模型。
+
+- **《从 CPU 架构到操作系统实现》— 外设章 5.1–5.3**  
+  Bilibili：https://www.bilibili.com/video/BV1ErEaznEaB/  
+  中文讲解。重点看存储器系统、读写存储器，以及用 ARM 汇编点灯，可把 MMIO 概念连接到 Cortex-M / STM32。
+## 9. Related Knowledge
 ---
 
 - [Register Fundamentals](../001-register-fundamentals/README.md)
@@ -154,7 +167,7 @@ Peripheral registers 位于 MCU peripheral hardware 中，CPU 通过 address spa
 - [C Hardware Access](../../../C/10-hardware-access/)
 
 ---
-## 9. References
+## 10. References
 ---
 
 - STMicroelectronics, [PM0214 — STM32 Cortex-M4 MCUs and MPUs programming manual](https://www.st.com/resource/en/programming_manual/dm00046982-stm32-cortex-m4-mcus-and-mpus-programming-manual-stmicroelectronics.pdf)
