@@ -126,7 +126,16 @@ int c = a + b;
 这和 peripheral register 不同。Peripheral register 往往代表明确的 hardware control/status state，软件访问它是为了直接影响某个外设。
 
 ---
-## 8. Related Knowledge
+---
+## 8. Course Resources
+---
+
+CPU registers 和 instruction execution、function call、stack、control flow 连在一起，第一次学习时更适合配合动态讲解。
+
+- **《从 CPU 架构到操作系统实现》— Cortex-M 寄存器章 4.1–4.5**  
+  Bilibili：https://www.bilibili.com/video/BV1ErEaznEaB/  
+  中文讲解。重点覆盖 ARM Cortex-M 寄存器组、general-purpose registers、PC、SP、LR，和本章内容直接对应。
+## 9. Related Knowledge
 ---
 
 - [Register Fundamentals](../001-register-fundamentals/README.md)
@@ -134,7 +143,7 @@ int c = a + b;
 - [Memory-Mapped I/O](../004-memory-mapped-io/README.md)
 
 ---
-## 9. References
+## 10. References
 ---
 
 - STMicroelectronics, [PM0214 — STM32 Cortex-M4 MCUs and MPUs programming manual](https://www.st.com/resource/en/programming_manual/dm00046982-stm32-cortex-m4-mcus-and-mpus-programming-manual-stmicroelectronics.pdf)
